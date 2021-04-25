@@ -1,0 +1,87 @@
+
+#0090
+<ANP0500:0002:0001<MNA<FLJ0800:0095<CMU0008<FAI0000<END
+#0091
+<ANP0500:0002:0001<MNA<CMU0008<FAI0001<END
+#0092
+<ANP0500:0002:0001<MNA<CMU0008<FAI0002<END
+#0093
+<ANP0500:0002:0001<MNA<CMU0008<FAI0003<END
+#0094
+<ANP0500:0002:0001<MNA<CMU0008<FAI0004<END
+#0095
+<CMU0023<FAI0000<END
+#0101
+<KEY<MSGIt won't open.<NOD<END
+#0110
+<KEY<SOU0000<ANP0110:0000:0002<FAO0002<TRA0013:0092:0027:0025
+#0120
+<KEY<MSG...<NOD
+What are you doing here?<NOD<END
+#0121
+<AM+0005:1000<AM+0003:1000<AM+0004:1000<AM+0001:1000<KEY<MSGWatch out!<NOD
+As long as I can remember,
+this cave has been
+full of soap monsters.<NOD
+The small ones are harmless,<NOD
+but the huge soap called Pooh
+is evil.<NOD
+He imprisioned us and forced us
+to grow flowers many years ago,<NOD
+and we still are
+subject to his tyranny.<NOD<END
+#0300
+<ITJ0008:0301
+<KEY<MSG*Crackle* *Snap!*<NOD<FLJ0242:0000
+The charcoal burns fiercely.<NOD<END
+#0301
+<KEY<GIT1008<MSGDo you want to use the
+=Jellyfish Juice=?<YNJ0000<CLO<GIT0000
+<IT-0008<ANP0300:0010:0000<WAI0030<FLJ0242:0302<FL+0242
+<MSGYou find something in the
+ashes...<NOD<CLR<GIT1012<IT+0012
+<CMU0010Got the =Charcoal=.<WAI0210<NOD<CLO<RMU<DNP0300<END
+#0302
+<KEY<DNP0300<END
+#0500
+<FLJ0226:0506
+<FLJ0242:0505
+<FLJ0484:0504
+<FLJ0752:0502
+<FLJ0241:0503
+<FLJ0101:0503
+<KEY<FAC0035
+<MSGIt's risky to travel
+these caves.<NOD
+Do you want some firearms?<YNJ0508<FL+0101<CLRI won't need
+these anymore...<NOD
+<CLR<FAC0000
+<FL+0808<AM+0002:0200Got the Doggie Gun.<NOD
+<CLR<GIT0000<CLR<FAC0035<MSGYou should have this too.<NOD<CLR
+<FAC0000<AM+0012:0200Got the Frontier.<NOD<END
+#0502
+<KEY<MSGI gave you this costume to help
+you make sure no one recognizes
+you, and gets you in danger.<NOD
+I think it looks good on you.<NOD<END
+#0503
+<KEY<FAC0035<MSGStay safe!<NOD<END
+#0504
+<KEY<MSGYou need some =Charcoal=?<NOD
+You can take what's in my
+fireplace, if you like.<NOD<END
+#0505
+<KEY<MSGWhat do you need charcoal for?<NOD<END
+#0506
+<KEY<MSGI heard some kind of crash outside
+a little while ago.<NOD
+That and screams of terror...<NOD<END
+#0507
+<KEY<FLJ0808:0507<SOU0000<ANP0100:0000:0002<FAO0000<TRA0004:0090:0003:0010
+#0508
+<KEY<CLR<FAC0035<MSGOh, well okay then.<NOD<END
+#0509
+<FLJ0808:0510
+<KEY<FAC0035<MSGWait!<NOD<END
+#0510
+<DNP0509<KEY<FAO0001<TRA0004:0093:0003:0010

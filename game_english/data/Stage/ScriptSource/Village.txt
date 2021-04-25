@@ -1,0 +1,29 @@
+#0200
+<FLJ1643:0208<MNA<CMU0024<FAI0000<END
+#0201
+<KEY<FAC0035<MSGI have nothing to sell you
+at the moment.<NOD<END
+#0202
+<KEY<MSGWhat?! How did you get here?!<NOD<CLROh, so your a dirty hacker!<NOD<CLRBegone!<NOD<FLA<INI
+#0203
+<KEY<MSGUs Mimiga were
+forced to raise flowers by Pooh.<NOD
+Now some hotshot Su-
+is trying to find the exit.<NOD
+Peh! She never will!<NOD<END
+#0204
+<KEY<MSGYou're looking for Su-?<NOD
+I saw her go into
+that house up there.<NOD<END
+#0205
+<ITJ0001:0207<KEY<MSGIt's locked.<NOD<END
+#0206
+<KEY<MSGIt's a sprinkler.<NOD<END
+#0207
+<FAO0000<TRA0016:0200:0015:0005
+#0208
+<KEY<IT+0001<FL+1643<DNP0208<MSGGot a key.<NOD<END
+#0209
+<DNP0208<END
+#1001
+<MNA<CMU0024<FAI0000<END

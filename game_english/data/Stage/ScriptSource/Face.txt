@@ -1,0 +1,21 @@
+#0200
+<MNA<CMU0005<FAI0004<END
+#0201
+<FAO0002<TRA0059:0094:0070:0068
+#0203
+<KEY<FAC0032<MSGSu- is not here.
+She comes and goes
+to and from the quarry.<NOD<END
+#0204
+<KEY<FAO0004<TRA0012:0090:0015:0021 <TRA0058:0090:0006:0023 //dank
+
+<TRA0088:0090:0001:0014 //seal
+
+//<TRA0068:0090:0148:0105 //white
+
+//<MSGIt's a computer. It doesn't
+//seem like it's on at the moment.<NOD<END
+#0205
+<KEY<MSG*wheeze* I think I saw you before.
+Wasn't the war over?<NOD
+It must be getting to my head...<NOD<END

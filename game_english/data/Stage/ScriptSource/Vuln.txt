@@ -1,0 +1,10 @@
+#0090
+<CMU0008<MNA<FAI0005<END
+#0091
+<KEY<FAC0035<MSGHello, Traveler. I've got
+the weapon for you.<NOD
+Normally, I'd charge you for
+it, but that hasn't
+been programmed yet!<NOD<MSGDo you still want it?<YNJ0092<MSGHere you go!<AM+0004:2000<GIT1043<MSGGot the Doggie Vulcan.<NOD<GIT0000<END
+#0092
+<KEY<MSG*sigh* It's really useful...<NOD<END

@@ -1,0 +1,31 @@
+
+#0094
+<MNA<CMU0005<FAI0004<END //this one
+#0095
+<KEY<MSGDo you want to flip the switch?<YNJ0000<ANP0095:0010:0000<END
+#0096
+<KEY<FAO0004<TRA0015:1209:0082:0016
+#0097
+<KEY<MSGWatch out for spikes!<NOD<END
+#0098
+<KEY<FAO0001<TRA0016:0200:0015:0005
+#0099
+<KEY<MSGDo you want to start the Last Cave
+challenge?<YNJ0000<FAO0001<TRA0066:0090:0007:0052
+#0100
+<KEY<FAO0004<TRA0027:0090:0024:0026
+#0101
+<KEY<FAO0001<TRA0054:0090:0033:0005
+#0102
+<KEY<MSGThis is our village.<NOD
+It's usually very quiet here,<NOD
+But when something happens
+everybody is excited.<NOD<CLO
+<MSGOh, and tell Ivan I said hi!<NOD<END
+#0103
+<KEY<MSGThe leader of the Mimiga minery
+in the cave gave me this.
+He said he didn't need it anymore.<NOD
+Do you want it?<YNJ0104<IT+0021<MSGObtained an Air Tank.<NOD<END
+#0104
+<KEY<MSGThat's too bad.<NOD<END
