@@ -796,7 +796,7 @@ BOOL Game(void)
 #ifdef JAPANESE
 		Backend_ShowMessageBox("エラー", "汎用ファイルが読めない");
 #else
-		Backend_ShowMessageBox("Error", "Couldn't read general purpose files");
+		Backend_ShowMessageBox("Bruh!", "FIX THE GENERAL PURPOSE FILES! CAN'T LOAD THEM!");
 #endif
 
 		return FALSE;
@@ -811,7 +811,7 @@ BOOL Game(void)
 #ifdef JAPANESE
 		Backend_ShowMessageBox("エラー", "NPCテーブルが読めない");
 #else
-		Backend_ShowMessageBox("Error", "Couldn't read the NPC table");
+		Backend_ShowMessageBox("Bruh!", "You fucked the NPC table");
 #endif
 
 		return FALSE;
