@@ -344,22 +344,14 @@ BOOL MakeOrganyaWave(signed char track, signed char wave_no, signed char pipi)
 //■オルガーニャドラムス■■■■■■■■/////// (Organya drums)
 /////////////////////
 
-/*void ChangeDramFrequency(unsigned char key, signed char track)
+void ChangeDramFrequency(unsigned char key, signed char track)
 {
 	if (!audio_backend_initialised)
 		return;
 
 	AudioBackend_SetSoundFrequency(lpSECONDARYBUFFER[150 + track], key * 800 + 100);
-}*/
-/*void ChangeDramFrequency(unsigned char key, signed char track)
-{
-	if (!audio_backend_initialised)
-		return;
-		AudioBackend_Lock();
-		//ClownAudio_Mixer_SetSoundSampleRate(lpSECONDARYBUFFER[150 + track], key * 800 + 100);
-		AudioBackend_Unlock();
-	
 }
+
 void ChangeDramPan(unsigned char pan, signed char track)
 {
 	if (!audio_backend_initialised)
@@ -405,7 +397,7 @@ void PlayDramObject(unsigned char key, int mode, signed char track)
 				break;
 		}
 	}
-}*/
+}
 
 ORGDATA org_data;
 
@@ -760,15 +752,15 @@ void OrgData::PlayData(void)
 	}
 
 	// ドラムの再生 (Drum playback)
-	/*for (i = MAXMELODY; i < MAXTRACK; i++)
+	for (i = MAXMELODY; i < MAXTRACK; i++)
 	{
 		if (np[i] != NULL && PlayPos == np[i]->x)	// 音が来た。 (The sound has come.)
 		{
 			if (np[i]->y != KEYDUMMY && !g_mute[i])	// ならす (Tame)
-				ExtraSound_PlaySFX(np[i]->y, 1, i - MAXMELODY);
+				PlayDramObject(np[i]->y, 1, i - MAXMELODY);
 
 			if (np[i]->pan != PANDUMMY)
-				ExtraSound_SetSFXPan(np[i]->pan, i - MAXMELODY);
+				ChangeDramPan(np[i]->pan, i - MAXMELODY);
 			if (np[i]->volume != VOLDUMMY)
 				TrackVol[i] = np[i]->volume;
 
@@ -776,8 +768,8 @@ void OrgData::PlayData(void)
 		}
 
 		if (np[i])
-			ExtraSound_SetSFXVolume(TrackVol[i] * Volume / 0x7F, i - MAXMELODY);
-	}*/
+			ChangeDramVolume(TrackVol[i] * Volume / 0x7F, i - MAXMELODY);
+	}
 
 	// Looping
 	PlayPos++;
