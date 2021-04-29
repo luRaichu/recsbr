@@ -2,6 +2,6 @@
 <MNA<CMU0008<FAI0004<END
 #0091
 <KEY<MSGNew! Get the Doggie Vulcan
-for only 75 Cion!<NOD<END
+for only 75 coin!<NOD<END
 #0092
 <FAO0004<TRA0059:0094:0002:0069

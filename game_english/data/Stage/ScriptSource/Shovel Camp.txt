@@ -95,7 +95,7 @@ to reach it
 even if we spent
 the rest of our lives.<NOD<CLR<FAC0019<MSGWe don't know that.<NOD
 there might be one nearby.
-Just sell that,<NOD<CLR<FAC0019<MSGIt's 1000 Cion!<NOD<CLR<FAC0034<MSGI can't.<NOD<END
+Just sell that,<NOD<CLR<FAC0019<MSGIt's 1000 coin!<NOD<CLR<FAC0034<MSGI can't.<NOD<END
 #0406
 //Mimiga leader :>
 <KEY<FAC0034<MSGI found a stone of air.<NOD

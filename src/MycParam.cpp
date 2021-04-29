@@ -36,6 +36,8 @@ ARMS_LEVEL gArmsLevelTable[14] =
 	{{1,  1,  1}},
 	{{40, 60, 200}}
 };
+
+
 void SetDestroyMyChar(int x, int y, int w, int num)
 {
 	int i;
@@ -362,7 +364,13 @@ void PutMyLife(BOOL flash)
 
 
 }
-	
+
+void Putcoin()
+{
+	RECT rccoin = {208, 112, 226, 118};
+	PutBitmap3(&grcGame, 42, 221, &rccoin, SURFACE_ID_TEXT_BOX);
+	PutNumber4(8, 221, coin, FALSE);
+}	
 
 void PutMyAir(int x, int y)
 {

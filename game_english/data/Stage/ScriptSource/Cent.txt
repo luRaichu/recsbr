@@ -29,3 +29,5 @@ He said he didn't need it anymore.<NOD
 Do you want it?<YNJ0104<IT+0021<MSGObtained an Air Tank.<NOD<END
 #0104
 <KEY<MSGThat's too bad.<NOD<END
+#0105
+<KEY<FAO0003<TRA0081:0090:0003:0007

@@ -55,6 +55,8 @@ typedef struct TEXT_SCRIPT
 	unsigned char wait_beam;
 } TEXT_SCRIPT;
 
+unsigned extern int coin;
+
 extern TEXT_SCRIPT gTS;
 
 extern const RECT gRect_line;

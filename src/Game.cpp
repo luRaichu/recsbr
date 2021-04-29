@@ -763,6 +763,7 @@ static int ModeAction(void)
 		if (g_GameFlags & 2)
 		{
 			PutMyLife(TRUE);
+			Putcoin();
 			PutMyAir((WINDOW_WIDTH / 2) - 40, (WINDOW_HEIGHT / 2) - 16);
 			PutActiveArmsList();
 			PutArmsEnergy(TRUE);

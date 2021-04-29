@@ -9,6 +9,7 @@
 
 #include "ArmsItem.h"
 #include "Caret.h"
+#include "CommonDefines.h"
 #include "Draw.h"
 #include "File.h"
 #include "Flags.h"
@@ -195,46 +196,36 @@ void SetDestroyNpCharUp(int x, int y, int w, int num)
 
 void SetExpObjects(int x, int y, int exp)
 {
-	int n;
-	int sub_exp;
+    int n;
+    int sub_exp;
 
-	n = 0x100;
-	while (exp)
-	{
-		while (n < NPC_MAX && gNPC[n].cond)
-			++n;
+    n = 0x100;
+    while (exp)
+    {
+        while (n < NPC_MAX && gNPC[n].cond)
+            ++n;
 
-		if (n == NPC_MAX)
-			break;
+        if (n == NPC_MAX)
+            break;
 
-		memset(&gNPC[n], 0, sizeof(NPCHAR));
+        memset(&gNPC[n], 0, sizeof(NPCHAR));
 
-		if (exp >= 20)
-		{
-			exp -= 20;
-			sub_exp = 20;
-		}
-		else if (exp >= 5)
-		{
-			exp -= 5;
-			sub_exp = 5;
-		}
-		else if (exp >= 1)
-		{
-			exp -= 1;
-			sub_exp = 1;
-		}
+        if (exp >= 1)
+        {
+            exp -= 1;
+            sub_exp = 1;
+        }
 
-		gNPC[n].cond |= 0x80;
-		gNPC[n].direct = 0;
-		gNPC[n].code_char = 1;
-		gNPC[n].x = x;
-		gNPC[n].y = y;
-		gNPC[n].bits = gNpcTable[gNPC[n].code_char].bits;
-		gNPC[n].exp = sub_exp;
+        gNPC[n].cond |= 0x80;
+        gNPC[n].direct = 0;
+        gNPC[n].code_char = 1;
+        gNPC[n].x = x;
+        gNPC[n].y = y;
+        gNPC[n].bits = gNpcTable[gNPC[n].code_char].bits;
+        gNPC[n].exp = sub_exp;
 
-		SetUniqueParameter(&gNPC[n]);
-	}
+        SetUniqueParameter(&gNPC[n]);
+    }
 }
 
 BOOL SetBulletObject(int x, int y, int val)

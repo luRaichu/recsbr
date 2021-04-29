@@ -82,6 +82,7 @@ BOOL SaveProfile(const char *name)
 	memcpy(profile.permitstage, gPermitStage, sizeof(profile.permitstage));
 	memcpy(profile.permit_mapping, gMapping, sizeof(profile.permit_mapping));
 	memcpy(profile.flags, gFlagNPC, sizeof(profile.flags));
+	profile.coin = coin;
 	// Custom
 	memcpy(profile.extra_code, gProfileCodeExtra, sizeof(profile.extra_code));
 	profile.MIMCurrentNum = gMIMCurrentNum;
@@ -268,6 +269,7 @@ BOOL LoadProfile(const char *name)
 	gMC.star = profile.star;
 	gMC.cond = 0x80;
 	gMC.air = 1000;
+	coin = profile.coin;
 	gMC.lifeBr = profile.life;
 	gMC.x = profile.x;
 	gMC.y = profile.y;
