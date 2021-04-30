@@ -708,38 +708,7 @@ int TextScriptProc(void)
 						AddPermitStage(x, y);
 						gTS.p_read += 13;
 					}
-					//coin commands
-					//Add X amount of coin
-					else if (IS_COMMAND('C','I','+'))
-					{
-						x = GetTextScriptNo(gTS.p_read + 4);
-						coin+= x;
-						gTS.p_read += 8;
-					}
-					//Remove X amount of coin
-					else if (IS_COMMAND('C','I','-'))
-					{
-						x = GetTextScriptNo(gTS.p_read + 4);
-						coin-= x;
-						gTS.p_read += 8;
-					}
-					//Set coin to X (useful for removing all coins!)
-					else if (IS_COMMAND('C','I','S'))
-					{
-						x = GetTextScriptNo(gTS.p_read + 4);
-						coin= x;
-						gTS.p_read += 8;
-					}
-					//If coin is Greater than or Equal to X, go to event Y.
-					else if (IS_COMMAND('C','I','J'))
-					{
-						x = GetTextScriptNo(gTS.p_read + 4);
-						y = GetTextScriptNo(gTS.p_read + 9);
-						if (coin >= x)
-							JumpTextScript(y);
-						else
-						gTS.p_read += 13;
-					}
+					
 					else if (IS_COMMAND('M','P','+'))
 					{
 						x = GetTextScriptNo(gTS.p_read + 4);

@@ -801,7 +801,6 @@ void HitMyCharNpChar(void)
 		{
 			PlaySoundObject(14, SOUND_MODE_PLAY);
 			AddExpMyChar(gNPC[i].exp);
-			coin+=1;
 			gNPC[i].cond = 0;
 		}
 
