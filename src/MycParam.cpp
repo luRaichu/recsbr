@@ -368,8 +368,8 @@ void PutMyLife(BOOL flash)
 void PutCion()
 {
 	RECT rcCion = {208, 112, 226, 118};
-	PutBitmap3(&grcGame, 42, 221, &rcCion, SURFACE_ID_TEXT_BOX);
-	PutNumber4(8, 221, cion, FALSE);
+	PutBitmap3(&grcGame, 99, 434, &rcCion, SURFACE_ID_TEXT_BOX);
+	PutNumber4(16, 216, cion, FALSE);
 }
 
 void PutMyAir(int x, int y)
