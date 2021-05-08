@@ -39,6 +39,7 @@ void InitMyChar(void)
 	gMC.life = 3;
 	gMC.max_life = 3;
 	gMC.unit = 0;
+	cion = 0;
 
 	// This is initialized with the values the game uses in vanilla
 	gMC.physics_normal.max_dash = 0x32C;

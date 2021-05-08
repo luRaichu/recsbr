@@ -30,6 +30,8 @@ typedef struct PROFILE
 	signed char permit_mapping[0x80];
 	char FLAG[4];
 	unsigned char flags[1000];
+	// CION
+	unsigned int cion;
 	// Custom
 	char extra_code[0x10];
 	// <MIM

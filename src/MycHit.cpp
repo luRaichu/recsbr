@@ -800,23 +800,22 @@ void HitMyCharNpChar(void)
 		if (hit != 0 && gNPC[i].code_char == 1)
 		{
 			PlaySoundObject(14, SOUND_MODE_PLAY);
-			AddExpMyChar(gNPC[i].exp);
+			// AddExpMyChar(gNPC[i].exp);
+			cion+= 1;
 			gNPC[i].cond = 0;
 		}
 
 		if (hit != 0 && gNPC[i].code_char == 86)
 		{
-			PlaySoundObject(14, SOUND_MODE_PLAY);
-			AddExpMyChar(gNPC[i].exp);
-
+			PlaySoundObject(42, SOUND_MODE_PLAY);
+			AddBulletMyChar(gNPC[i].code_event, gNPC[i].exp);
 			gNPC[i].cond = 0;
 		}
 
 		if (hit != 0 && gNPC[i].code_char == 87)
 		{
-			PlaySoundObject(14, SOUND_MODE_PLAY);
-			AddExpMyChar(gNPC[i].exp);
-
+			PlaySoundObject(20, SOUND_MODE_PLAY);
+			AddLifeMyChar(gNPC[i].exp);
 			gNPC[i].cond = 0;
 		}
 

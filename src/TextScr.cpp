@@ -53,6 +53,7 @@ const RECT gRect_line = {0, 0, 216, 16};
 static unsigned long nod_color;
 #endif
 
+unsigned int cion = 0;
 unsigned int gMIMCurrentNum = 0;
 
 // Initialize and end tsc
@@ -708,7 +709,38 @@ int TextScriptProc(void)
 						AddPermitStage(x, y);
 						gTS.p_read += 13;
 					}
-					
+					//CION commands
+					//Add X amount of cion
+					else if (IS_COMMAND('C','I','+'))
+					{
+						x = GetTextScriptNo(gTS.p_read + 4);
+						cion+= x;
+						gTS.p_read += 8;
+					}
+					//Remove X amount of cion
+					else if (IS_COMMAND('C','I','-'))
+					{
+						x = GetTextScriptNo(gTS.p_read + 4);
+						cion-= x;
+						gTS.p_read += 8;
+					}
+					//Set cion to X (useful for removing all cions!)
+					else if (IS_COMMAND('C','I','S'))
+					{
+						x = GetTextScriptNo(gTS.p_read + 4);
+						cion= x;
+						gTS.p_read += 8;
+					}
+					//If cion is Greater than or Equal to X, go to event Y.
+					else if (IS_COMMAND('C','I','J'))
+					{
+						x = GetTextScriptNo(gTS.p_read + 4);
+						y = GetTextScriptNo(gTS.p_read + 9);
+						if (cion >= x)
+							JumpTextScript(y);
+						else
+						gTS.p_read += 13;
+					}
 					else if (IS_COMMAND('M','P','+'))
 					{
 						x = GetTextScriptNo(gTS.p_read + 4);
@@ -738,7 +770,7 @@ int TextScriptProc(void)
 							#ifdef JAPANESE
 							Backend_ShowMessageBox("エラー", "ステージの読み込みに失敗");
 							#else
-							Backend_ShowMessageBox("Bruh!", "Could not teleport to stage, man.");
+							Backend_ShowMessageBox("Bruh!", "Could not TransferStage, man.");
 							#endif
 
 							return enum_ESCRETURN_exit;

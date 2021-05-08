@@ -26,6 +26,7 @@ void AddMaxLifeMyChar(int val);
 void PutArmsEnergy(BOOL flash);
 void PutActiveArmsList(void);
 void PutMyLife(BOOL flash);
+void PutCion();
 void PutMyAir(int x, int y);
 void PutTimeCounter(int x, int y);
 BOOL SaveTimeCounter(void);

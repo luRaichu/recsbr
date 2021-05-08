@@ -55,6 +55,7 @@ typedef struct TEXT_SCRIPT
 	unsigned char wait_beam;
 } TEXT_SCRIPT;
 
+unsigned extern int cion;
 
 extern TEXT_SCRIPT gTS;
 
