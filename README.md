@@ -6,7 +6,6 @@ expectations.
 
 There's a fork coming out soon called 'CuckyCSE2' which will probably be this
 branch's successor, so keep an eye out for that.
-(Cucky sucks by the way)
 
 The original readme is below:
 
