@@ -71,6 +71,7 @@ BOOL SaveProfile(const char *name)
 	profile.direct = gMC.direct;
 	profile.max_life = gMC.max_life;
 	profile.life = gMC.life;
+	profile.cion = cion;
 	profile.star = gMC.star;
 	profile.select_arms = gSelectedArms;
 	profile.select_item = gSelectedItem;
@@ -100,6 +101,7 @@ BOOL SaveProfile(const char *name)
 	File_WriteLE16(profile.max_life, fp);
 	File_WriteLE16(profile.star, fp);
 	File_WriteLE16(profile.life, fp);
+	File_WriteLE32(profile.cion, fp);
 	File_WriteLE16(profile.a, fp);
 	File_WriteLE32(profile.select_arms, fp);
 	File_WriteLE32(profile.select_item, fp);
@@ -188,6 +190,7 @@ BOOL LoadProfile(const char *name)
 	profile.max_life = File_ReadLE16(fp);
 	profile.star = File_ReadLE16(fp);
 	profile.life = File_ReadLE16(fp);
+	profile.cion = File_ReadLE32(fp);
 	profile.a = File_ReadLE16(fp);
 	profile.select_arms = File_ReadLE32(fp);
 	profile.select_item = File_ReadLE32(fp);
