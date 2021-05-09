@@ -38,7 +38,7 @@ static BOOL bFPS = FALSE;
 #ifdef JAPANESE
 static const char* const lpWindowName = "洞窟物語";	// "Cave Story"
 #else
-static const char* const lpWindowName = "Cave Story ~ Doukutsu Monogatari";
+static const char* const lpWindowName = "Raichu's Cave Story Beta Remake";
 #endif
 
 // Framerate stuff
