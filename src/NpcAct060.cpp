@@ -1552,17 +1552,28 @@ void ActNpc072(NPCHAR *npc)
 // Water droplet
 void ActNpc073(NPCHAR *npc)
 {
-	RECT rect[1] = {
-		{0, 0, 4, 4},
-		/*{72, 16, 74, 18},
-		{74, 16, 76, 18},
-		{76, 16, 78, 18},
-		{78, 16, 80, 18},
-		{80, 16, 82, 18},*/
+	RECT rect[4] = {
+		{24, 65, 32, 72},
+		{16, 65, 24, 72},
+		{8, 65, 16, 72},
+		{0, 65, 8,72},
+
 	};
+	
 
 	npc->ym += 0x20;
 	//npc->ani_no = Random(0, 4);
+	npc->rect = rect[npc->ani_no];
+	if (++npc->ani_wait > 6) // Animation counter, how many frames until we advance to next frame
+	{
+		npc->ani_wait = 0; // Reset counter
+		++npc->ani_no; // Increase animation frame by one
+	}
+	if (npc->ani_no > 5)
+	{
+		npc->ani_no = 5;
+	}
+
 
 	if (npc->ym > 0x5FF)
 		npc->ym = 0x5FF;

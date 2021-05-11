@@ -185,8 +185,8 @@ int main(int argc, char *argv[])
 		FreeBitmap(cursor_rgba_pixels);
 	}
 
-	if (IsKeyFile("fps"))
-		bFPS = TRUE;
+
+	bFPS = TRUE;
 
 	// Set rects
 	RECT rcLoading = {0, 0, 64, 8};

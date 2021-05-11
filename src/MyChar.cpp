@@ -614,18 +614,17 @@ void ActMyChar_Normal(BOOL bKey)
 		else
 			dir = 0;
 
-		if (!(gMC.flag & 8) && gMC.ym > 0x200)
-		{
-			for (a = 0; a < 5; ++a)
-			{
-				x = gMC.x + (Random(-8, 8) * 0x200);
-				SetNpChar(73, x, gMC.y, gMC.xm + Random(-0x200, 0x200), Random(-0x200, 0x80) - (gMC.ym / 2), dir, NULL, 0);
-				
-			}
+	if (!(gMC.flag & 8) && gMC.ym > 0x200)
+        	{
+            	for (a = 0; a < 5; ++a)
+            	{
+                	x = gMC.x; //+ (Random(-8, 8) * 0x200);
+                	SetCaret(x, gMC.y, 20, dir);
+            	}
 
-			PlaySoundObject(56, SOUND_MODE_PLAY);
-		}
-		else
+            	PlaySoundObject(56, SOUND_MODE_PLAY);
+        }
+        else		
 		{
 			if (gMC.xm > 0x200 || gMC.xm < -0x200)
 			{

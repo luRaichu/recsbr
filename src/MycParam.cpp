@@ -360,7 +360,13 @@ void PutMyLife(BOOL flash)
 			PixelToScreenCoord(224), // Y position,
 			& rcLife[gMC.life - 1 > i], // Which rect to use, 'gMC.life - 1 > i' checks if  the current heart that is being drawn is full or not, returns 0 if it's not and 1 if it is
 			SURFACE_ID_TEXT_BOX); // Surface
+		if (gMC.life <= 1)
+		{
+			//PlaySoundObject(31, SOUND_MODE_PLAY);
+			//to be continued...
+		}
 	}
+
 
 
 }

@@ -2,7 +2,7 @@
 
 #include "WindowsWrapper.h"
 
-#define CARET_MAX 0x42
+#define CARET_MAX 0x43
 
 struct CARET_TABLE
 {
@@ -29,7 +29,7 @@ struct CARET
 };
 
 extern CARET gCrt[CARET_MAX];
-extern CARET_TABLE gCaretTable[20];
+extern CARET_TABLE gCaretTable[21];
 
 void InitCaret(void);
 void ActCaret(void);
