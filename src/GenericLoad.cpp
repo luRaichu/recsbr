@@ -112,12 +112,12 @@ static const struct
 	{117, "PixTone/117.pxt", SOUND_TYPE_PIXTONE},//idk sound
 
 	//drams
-	{150, "PixTone/150.wav", SOUND_TYPE_DABABYAUDIO},
+	/*{150, "PixTone/150.wav", SOUND_TYPE_DABABYAUDIO},
 	{151, "PixTone/151.wav", SOUND_TYPE_DABABYAUDIO},
 	{152, "PixTone/152.wav", SOUND_TYPE_DABABYAUDIO},
 	{153, "PixTone/153.wav", SOUND_TYPE_DABABYAUDIO},
 	{154, "PixTone/154.wav", SOUND_TYPE_DABABYAUDIO},
-	{155, "PixTone/155.wav", SOUND_TYPE_DABABYAUDIO}
+	{155, "PixTone/155.wav", SOUND_TYPE_DABABYAUDIO}*/
 
 
 };
@@ -242,12 +242,12 @@ BOOL LoadGenericData(void)
 
 	if (bError)
 		return FALSE;
-    /*InitSoundObject("BASS01", 150);
-    InitSoundObject("SNARE01", 151);
-    InitSoundObject("HICLOSE", 152);
-    InitSoundObject("HIOPEN", 153);
-    InitSoundObject("TOM01", 154);
-    InitSoundObject("PER01", 155);*/
+    LoadSoundObject("data/PixTone/150.wav", 150);
+    LoadSoundObject("data/PixTone/151.wav", 151);
+    LoadSoundObject("data/PixTone/152.wav", 152);
+    LoadSoundObject("data/PixTone/153.wav", 153);
+    LoadSoundObject("data/PixTone/154.wav", 154);
+    LoadSoundObject("data/PixTone/155.wav", 155);
 	MakeSurface_Generic(WINDOW_WIDTH, WINDOW_HEIGHT, SURFACE_ID_SCREEN_GRAB, TRUE);
 	MakeSurface_Generic(320, 240, SURFACE_ID_LEVEL_BACKGROUND, FALSE);
 	MakeSurface_Generic(WINDOW_WIDTH, WINDOW_HEIGHT, SURFACE_ID_MAP, TRUE);
