@@ -44,6 +44,29 @@
 #include "Star.h"
 #include "TextScr.h"
 #include "ValueView.h"
+#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <stdio.h>
+#include <time.h>
+
+// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
+const std::string currentDateTime() {
+    time_t     now = time(0);
+    struct tm  tstruct;
+    char       buf[80];
+    tstruct = *localtime(&now);
+    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+    // for more information about date/time format
+    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
+
+    return buf;
+}
+
+int printDateTime() {
+    std::cout << "the d8 is: " << currentDateTime() << std::endl;
+    //getchar();  // wait for keyboard input
+}
 
 int g_GameFlags;
 int gCounter;
@@ -80,7 +103,7 @@ void PutNumber4(int x, int y, int value, BOOL bZero)
 	int a;
 	int sw;
 	int offset;
-
+    //sus();
 	// Limit value
 	if (value > 9999)
 		value = 9999;

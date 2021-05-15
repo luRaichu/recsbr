@@ -42,7 +42,7 @@ static const struct
 	{14, "PixTone/014.pxt", SOUND_TYPE_PIXTONE},//destroy snack block
 	{15, "PixTone/015.pxt", SOUND_TYPE_PIXTONE},//touch exp dorito
 	{16, "Wav/pchurt.ogg", SOUND_TYPE_OTHER},//jump
-	{17, "Wav/pchurt.ogg", SOUND_TYPE_OTHER},//hurt
+	{17, "PixTone/007.pxt", SOUND_TYPE_PIXTONE},//hurt
 	{18, "PixTone/007.pxt", SOUND_TYPE_OTHER},//RIP
 	{20, "PixTone/020.pxt", SOUND_TYPE_PIXTONE},//menu select
 	{21, "PixTone/021.pxt", SOUND_TYPE_PIXTONE},//health refill

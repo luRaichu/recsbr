@@ -1162,7 +1162,11 @@ void ActNpc236(NPCHAR *npc)
 // Gunfish projectile
 void ActNpc237(NPCHAR *npc)
 {
-	RECT rc = {312, 32, 320, 40};
+		RECT rect_left[3] = {
+		{208, 104, 224, 120},
+		{224, 104, 240, 120},
+		{240, 104, 256, 120},
+	};
 
 	int i;
 	BOOL bHit;
@@ -1186,7 +1190,7 @@ void ActNpc237(NPCHAR *npc)
 			if (bHit)
 			{
 				for (i = 0; i < 5; ++i)
-					SetCaret(npc->x, npc->y, 1, 0);
+					SetCaret(npc->x, npc->y, 1, 0); //sussy code
 
 				PlaySoundObject(21, SOUND_MODE_PLAY);
 				npc->cond = 0;
@@ -1196,14 +1200,14 @@ void ActNpc237(NPCHAR *npc)
 			break;
 	}
 
-	npc->ym += 0x20;
+	npc->ym += 0x22;
 	if (npc->ym > 0x5FF)
 		npc->ym = 0x5FF;
 
 	npc->x += npc->xm;
 	npc->y += npc->ym;
 
-	npc->rect = rc;
+	npc->rect = rect_left[npc->ani_no];
 }
 
 // Press (sideways)

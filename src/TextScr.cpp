@@ -1332,6 +1332,12 @@ int TextScriptProc(void)
 
 						gTS.p_read += 8;
 					}
+					//ifdate
+					else if (IS_COMMAND('E','V','E'))
+					{
+						z = GetTextScriptNo(gTS.p_read + 4);
+						JumpTextScript(z);
+					}
 					else if (IS_COMMAND('M','I','M'))
 					{
 						gMIMCurrentNum = GetTextScriptNo(gTS.p_read + 4);

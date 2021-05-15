@@ -1612,8 +1612,10 @@ void ActNpc353(NPCHAR* npc)
 			deg += (unsigned char)Random(-0x10, 0x10);
 			ym = GetSin(deg);
 			xm = GetCos(deg);
-			SetNpChar(100, npc->x, npc->y + (4 * 0x200), xm, ym, 0, NULL, 0x100);
-
+			if (npc->direct == 0)
+					SetNpChar(237, npc->x - (8 * 0x200), npc->y - (8 * 0x200), -0x400, -0x400, 0, NULL, 0x100);
+				else
+					SetNpChar(237, npc->x + (8 * 0x200), npc->y - (8 * 0x200), 0x400, -0x400, 0, NULL, 0x100);
 			PlaySoundObject(39, SOUND_MODE_PLAY);
 
 			if (npc->count1 == 0)
