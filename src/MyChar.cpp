@@ -17,6 +17,7 @@
 #include "Star.h"
 #include "TextScr.h"
 #include "ValueView.h"
+#include "Stage.h"
 
 MYCHAR gMC;
 

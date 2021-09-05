@@ -762,7 +762,7 @@ void ActNpc187(NPCHAR *npc)
 			npc->count1 = 120;
 			npc->act_wait = Random(0, 50);
 
-			for (i = 0; i < 5; ++i)
+			for (i = 0; i < 4; ++i)
 				SetNpChar(188, 0, 0, 0, 0, 51 * i, npc, 0x100);
 			// Fallthrough
 		case 1:
@@ -782,10 +782,13 @@ void ActNpc187(NPCHAR *npc)
 			else
 				npc->direct = 2;
 
-			if (npc->tgt_y < npc->y)
+			/*if (npc->tgt_y < npc->y)
 				npc->ym -= 0x10;
 			if (npc->tgt_y > npc->y)
-				npc->ym += 0x10;
+				npc->ym += 0x10;*/
+
+			//npc->y = Random(-0x355, 0x355);
+			//npc->x = Random(-0x355, 0x355);
 
 			if (npc->ym > 0x355)
 				npc->ym = 0x355;
@@ -800,12 +803,12 @@ void ActNpc187(NPCHAR *npc)
 
 	RECT rect_left[2] = {
 		{224, 104, 256, 136},
-		{256, 104, 288, 136},
+		{224, 104, 256, 136},
 	};
 
 	RECT rect_right[2] = {
 		{224, 136, 256, 168},
-		{256, 136, 288, 168},
+		{224, 136, 256, 168},
 	};
 
 	if (++npc->ani_wait > 2)
@@ -893,12 +896,12 @@ void ActNpc188(NPCHAR *npc)
 
 	RECT rect_left[2] = {
 		{288, 104, 304, 120},
-		{304, 104, 320, 120},
+		{288, 104, 304, 120},
 	};
 
 	RECT rect_right[2] = {
-		{288, 120, 304, 136},
-		{304, 120, 320, 136},
+		{288, 104, 304, 120},
+		{288, 104, 304, 120},
 	};
 
 	if (npc->direct == 0)

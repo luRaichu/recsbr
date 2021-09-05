@@ -173,7 +173,7 @@ int StageSelectLoop(int *p_event)
 	{
 		GetTrg();
 
-		/*if (gKey & KEY_PAUSE)
+		if (gKey & KEY_PAUSE)
 		{
 			switch (Call_Pause())
 			{

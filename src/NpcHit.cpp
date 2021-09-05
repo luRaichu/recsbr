@@ -486,28 +486,6 @@ void LoseNpChar(NPCHAR *npc, BOOL bVanish)
 	{
 		switch (Random(1, 5))
 		{
-			case 1:
-				// Spawn health
-				if (npc->exp > 6)
-					val = 6;
-				else
-					val = 2;
-
-				SetLifeObject(npc->x, npc->y, val);
-
-				break;
-
-			case 2:
-				// Spawn missile launcher ammo
-				if (npc->exp > 6)
-					val = 3;
-				else
-					val = 1;
-
-				if (SetBulletObject(npc->x, npc->y, val))
-					break;
-
-				// Fallthrough
 			default:
 				// Spawn weapon energy
 				SetExpObjects(npc->x, npc->y, npc->exp);

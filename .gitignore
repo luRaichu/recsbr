@@ -91,3 +91,6 @@
 # Exclude CSE2E configuration file
 /game_english/ConfigCSE2E.dat
 /game_japanese/ConfigCSE2E.dat
+
+# Exclude VS shit
+.vs

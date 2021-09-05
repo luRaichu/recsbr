@@ -50,24 +50,6 @@
 #include <stdio.h>
 #include <time.h>
 
-// Get current date/time, format is YYYY-MM-DD.HH:mm:ss
-const std::string currentDateTime() {
-    time_t     now = time(0);
-    struct tm  tstruct;
-    char       buf[80];
-    tstruct = *localtime(&now);
-    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
-    // for more information about date/time format
-    strftime(buf, sizeof(buf), "%Y-%m-%d.%X", &tstruct);
-
-    return buf;
-}
-
-int printDateTime() {
-    std::cout << "the d8 is: " << currentDateTime() << std::endl;
-    //getchar();  // wait for keyboard input
-}
-
 int g_GameFlags;
 int gCounter;
 
@@ -236,7 +218,7 @@ static int ModeOpening(void)
 		// Get pressed keys
 		GetTrg();
 
-		/*if (gKey & KEY_PAUSE)
+		if (gKey & KEY_PAUSE)
 		{
 			switch (Call_Pause())
 			{
@@ -246,7 +228,7 @@ static int ModeOpening(void)
 				case enum_ESCRETURN_restart:
 					return 1;
 			}
-		}*/
+		}
 
 		// Escape menu
 		if (gKey & KEY_ESCAPE)
@@ -462,7 +444,7 @@ static int ModeTitle(void)
 			}
 		}
 
-		/*if (gKey & KEY_PAUSE)
+		if (gKey & KEY_PAUSE)
 		{
 			switch (Call_Pause())
 			{
@@ -472,7 +454,7 @@ static int ModeTitle(void)
 				case enum_ESCRETURN_restart:
 					return 1;
 			}
-		}*/
+		}
 
 		if (gKey & KEY_ESCAPE)
 		{
@@ -637,7 +619,7 @@ static int ModeAction(void)
 		// Get pressed keys
 		GetTrg();
 
-		/*if (gKey & KEY_PAUSE)
+		if (gKey & KEY_PAUSE)
 		{
 			switch (Call_Pause())
 			{
@@ -647,7 +629,7 @@ static int ModeAction(void)
 				case enum_ESCRETURN_restart:
 					return 1;
 			}
-		}*/
+		}
 
 		// Escape menu
 		if (gKey & KEY_ESCAPE)

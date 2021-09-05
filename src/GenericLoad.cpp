@@ -29,7 +29,7 @@ static const struct
 	const char *path;
 	int type;
 } ptp_table[] = {
-	// TODO - Name the files
+	// TODO - Remove names
 	{1, "PixTone/007.pxt", SOUND_TYPE_PIXTONE}, //menu move blip
 	{2, "Wav/MESSAGE.ogg", SOUND_TYPE_OTHER}, //msg blip
 	{3, "PixTone/003.pxt", SOUND_TYPE_PIXTONE}, //bonkhead
@@ -43,7 +43,7 @@ static const struct
 	{15, "PixTone/015.pxt", SOUND_TYPE_PIXTONE},//touch exp dorito
 	{16, "Wav/pchurt.ogg", SOUND_TYPE_OTHER},//jump
 	{17, "PixTone/007.pxt", SOUND_TYPE_PIXTONE},//hurt
-	{18, "PixTone/007.pxt", SOUND_TYPE_OTHER},//RIP
+	{18, "Wav/Select.wav", SOUND_TYPE_OTHER},//RIP
 	{20, "PixTone/020.pxt", SOUND_TYPE_PIXTONE},//menu select
 	{21, "PixTone/021.pxt", SOUND_TYPE_PIXTONE},//health refill
 	{22, "PixTone/022.pxt", SOUND_TYPE_PIXTONE},//bubble

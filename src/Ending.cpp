@@ -502,7 +502,7 @@ int Scene_DownIsland(int mode)
 		// Get pressed keys
 		GetTrg();
 
-		/*if (gKey & KEY_PAUSE)
+		if (gKey & KEY_PAUSE)
 		{
 			switch (Call_Pause())
 			{
@@ -512,7 +512,7 @@ int Scene_DownIsland(int mode)
 				case enum_ESCRETURN_restart:
 					return enum_ESCRETURN_restart;
 			}
-		}*/
+		}
 
 		// Escape menu
 		if (gKey & KEY_ESCAPE)
