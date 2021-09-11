@@ -298,51 +298,65 @@ void ActNpc305(NPCHAR *npc)
 		npc->rect = rcRight[npc->ani_no];
 }
 
-// Balrog (nurse)
+// ARMS sign
 void ActNpc306(NPCHAR *npc)
 {
-	RECT rcLeft[2] = {
-		{240, 96, 280, 128},
-		{280, 96, 320, 128},
+	RECT rect[2] = {
+		{96, 208, 128, 224},
+		{64, 208, 96, 224},
 	};
 
-	RECT rcRight[2] = {
-		{160, 152, 200, 184},
-		{200, 152, 240, 184},
-	};
+	int a;
 
 	switch (npc->act_no)
 	{
 		case 0:
 			npc->act_no = 1;
-			npc->ani_no = 0;
-			npc->ani_wait = 0;
-			npc->y += 4 * 0x200;
+
 			// Fallthrough
 		case 1:
-			if (Random(0, 120) == 10)
-			{
-				npc->act_no = 2;
-				npc->act_wait = 0;
-				npc->ani_no = 1;
-			}
+			a = Random(0, 30);
 
+			if (a < 10)
+				npc->act_no = 2;
+			else if (a < 25)
+				npc->act_no = 3;
+			else
+				npc->act_no = 4;
+
+			npc->act_wait = Random(0x10, 0x40);
+			npc->ani_wait = 0;
 			break;
 
 		case 2:
-			if (++npc->act_wait > 8)
-			{
+			npc->rect = rect[0];
+
+			if (--npc->act_wait == 0)
 				npc->act_no = 1;
-				npc->ani_no = 0;
-			}
+
+			break;
+
+		case 3:
+			if (++npc->ani_wait % 2)
+				npc->rect = rect[0];
+			else
+				npc->rect = rect[1];
+
+			if (--npc->act_wait == 0)
+				npc->act_no = 1;
+
+			break;
+
+		case 4:
+			npc->rect = rect[1];
+
+			if (--npc->act_wait == 0)
+				npc->act_no = 1;
 
 			break;
 	}
 
-	if (npc->direct == 0)
-		npc->rect = rcLeft[npc->ani_no];
-	else
-		npc->rect = rcRight[npc->ani_no];
+	//npc->y += npc->ym;
 }
 
 // Caged Santa

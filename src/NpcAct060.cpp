@@ -1298,132 +1298,88 @@ void ActNpc068(NPCHAR *npc)
 		npc->rect = rect_right[npc->ani_no];
 }
 
-// Pignon
+// Soap
 void ActNpc069(NPCHAR *npc)
 {
-	RECT rcLeft[6] = {
-		{48, 0, 64, 16},
-		{64, 0, 80, 16},
-		{80, 0, 96, 16},
-		{96, 0, 112, 16},
-		{48, 0, 64, 16},
-		{112, 0, 128, 16},
+	RECT rcLeft[5] = {
+		{112, 240, 128, 256}, // Walking 1
+		{128, 240, 144, 256}, // Walking 2
+		{112, 240, 128, 256}, // Walking 3 (copied from frame 1)
+		{144, 240, 160, 256}, // Walking 4
+		{160, 240, 176, 256}, // Jumping
 	};
 
-	RECT rcRight[6] = {
-		{48, 16, 64, 32},
-		{64, 16, 80, 32},
-		{80, 16, 96, 32},
-		{96, 16, 112, 32},
-		{48, 16, 64, 32},
-		{112, 16, 128, 32},
+	RECT rcRight[5] = {
+		{112, 256, 128, 272}, // Walking 1
+		{128, 256, 144, 272}, // Walking 2
+		{112, 256, 128, 272}, // Walking 3 (copied from frame 1)
+		{144, 256, 160, 272}, // Walking 4
+		{160, 256, 176, 272}, // Jumping
 	};
 
 	switch (npc->act_no)
 	{
 		case 0:
-			npc->act_no = 1;
 			npc->ani_no = 0;
 			npc->ani_wait = 0;
-			npc->xm = 0;
+			npc->act_no = 1;
 			// Fallthrough
 		case 1:
-			if (Random(0, 100) == 1)
-			{
-				npc->act_no = 2;
-				npc->act_wait = 0;
-				npc->ani_no = 1;
-				break;
-			}
-
-			if (Random(0, 150) == 1)
-			{
-				if (npc->direct == 0)
-					npc->direct = 2;
-				else
-					npc->direct = 0;
-			}
-
-			if (Random(0, 150) == 1)
-			{
-				npc->act_no = 3;
-				npc->act_wait = 50;
-				npc->ani_no = 0;
-				break;
-			}
-
-			break;
-
-		case 2:
-			if (++npc->act_wait > 8)
-			{
-				npc->act_no = 1;
-				npc->ani_no = 0;
-			}
-
-			break;
-
-		case 3:
-			npc->act_no = 4;
-			npc->ani_no = 2;
-			npc->ani_wait = 0;
-			// Fallthrough
-		case 4:
-			if (--npc->act_wait == 0)
-				npc->act_no = 0;
-
-			if (++npc->ani_wait > 2)
-			{
-				npc->ani_wait = 0;
-				++npc->ani_no;
-			}
-
-			if (npc->ani_no > 4)
-				npc->ani_no = 2;
-
-			if (npc->flag & 1)
-			{
-				npc->direct = 2;
-				npc->xm = 0x200;
-			}
-
-			if (npc->flag & 4)
+			if (npc->flag & 4) // Touching a right wall
 			{
 				npc->direct = 0;
-				npc->xm = -0x200;
 			}
-
-			if (npc->direct == 0)
-				npc->xm = -0x100;
-			else
-				npc->xm = 0x100;
-
-			break;
-
-		case 5:
-			if (npc->flag & 8)
-				npc->act_no = 0;
-
-			break;
-	}
-
-	switch (npc->act_no)
-	{
-		case 1:
-		case 2:
-		case 4:
-			if (npc->shock)
+			if(npc->flag & 1) // Touching a left wall
 			{
-				npc->ym = -0x200;
-				npc->ani_no = 5;
-				npc->act_no = 5;
+				npc->direct = 2;
 			}
 
+			if (npc->direct == 0) // Walking
+			{
+				npc->xm = -0.65 * 0x200;
+			}
+			if (npc->direct == 2)
+			{
+				npc->xm = 0.65 * 0x200;
+			}
+			if (npc->flag & 8)
+			{
+				npc->ani_wait++;
+				if (npc->ani_wait > 4)
+				{
+					npc->ani_wait = 0;
+					npc->ani_no++;
+
+					if (npc->ani_no > 3)
+					{
+						npc->ani_no = 0;
+					}
+
+				}
+			}
+			/*else
+			{
+				npc->ani_no = 4;
+			}*/
+			if (Random(0, 120) == 10 && npc->flag & 8) // Jump randomly if touching floor
+			{
+				npc->ym -= 0x5FF;
+				npc->act_no = 2; // Next state
+			}
 			break;
+
+		case 2:
+			npc->ani_no = 4; // Set frame to jumping frame
+			npc->ani_wait = 0; // Reset animation timer
+
+			if (npc->flag & 8) // If touching floor, reset
+			{
+				npc->act_no = 1;
+			}
 	}
 
-	npc->ym += 0x40;
-	if (npc->ym > 0x5FF)
+	npc->ym += 0x40; // Gravity
+	if (npc->ym > 0x5FF) // Terminal velocity
 		npc->ym = 0x5FF;
 
 	npc->x += npc->xm;
