@@ -94,3 +94,10 @@
 
 # Exclude VS shit
 .vs
+.vscode
+
+# Exclude build script
+build.sh
+
+# Exclude saves
+*.dat

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <ctime>
 
 #include "WindowsWrapper.h"
 
@@ -1275,16 +1276,6 @@ int TextScriptProc(void)
 						}
 						gTS.p_read += 8;
 					}
-					else if (IS_COMMAND('F','A','C'))	// Duplicate command
-					{
-						z = GetTextScriptNo(gTS.p_read + 4);
-						if (gTS.face != (signed char)z)
-						{
-							gTS.face = (signed char)z;
-							gTS.face_x = (WINDOW_WIDTH / 2 - 156) * 0x200;
-						}
-						gTS.p_read += 8;
-					}
 					else if (IS_COMMAND('G','I','T'))
 					{
 						z = GetTextScriptNo(gTS.p_read + 4);
@@ -1332,7 +1323,20 @@ int TextScriptProc(void)
 
 						gTS.p_read += 8;
 					}
-					//ifdate
+					else if(IS_COMMAND('D','A','T')) // If date is XXXX:YYYY, run event ZZZZ
+					{
+						x = GetTextScriptNo(gTS.p_read + 4); // Month
+						y = GetTextScriptNo(gTS.p_read + 9); // Day
+						z = GetTextScriptNo(gTS.p_read + 14); // Event
+
+						time_t ttime = time(0);
+    					tm *local_time = localtime(&ttime);
+
+						if (local_time->tm_mon == x + 1 && local_time->tm_mday)
+						{
+							JumpTextScript(z);
+						}
+					}
 					else if (IS_COMMAND('E','V','E'))
 					{
 						z = GetTextScriptNo(gTS.p_read + 4);
