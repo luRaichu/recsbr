@@ -484,13 +484,8 @@ void LoseNpChar(NPCHAR *npc, BOOL bVanish)
 	// Create drop
 	if (npc->exp != 0)
 	{
-		switch (Random(1, 5))
-		{
-			default:
-				// Spawn weapon energy
-				SetExpObjects(npc->x, npc->y, npc->exp);
-				break;
-		}
+		// Spawn weapon energy
+		SetExpObjects(npc->x, npc->y, npc->exp);
 	}
 
 	// Set flag

@@ -11,8 +11,12 @@
 #include "MyChar.h"
 #include "MycParam.h"
 #include "NpChar.h"
+#include "NpChar.h"
 #include "Sound.h"
 #include "TextScr.h"
+#include <iostream>
+#include <string>
+using namespace std;
 
 void ResetMyCharFlag(void)
 {
@@ -800,11 +804,10 @@ void HitMyCharNpChar(void)
 		if (hit != 0 && gNPC[i].code_char == 1)
 		{
 			PlaySoundObject(14, SOUND_MODE_PLAY);
-			// AddExpMyChar(gNPC[i].exp);
-			cion+= 1;
+			//AddExpMyChar(gNPC[i].exp);
+			cion += gNPC[i].exp;
 			gNPC[i].cond = 0;
 		}
-
 		if (hit != 0 && gNPC[i].code_char == 86)
 		{
 			PlaySoundObject(42, SOUND_MODE_PLAY);

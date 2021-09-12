@@ -889,183 +889,85 @@ void ActNpc086(NPCHAR* npc)
 			npc->rect = rcNo;
 }
 
-// Experience
+// Heart
 void ActNpc087(NPCHAR *npc)
 {
-	// In wind
+	RECT rect2[2] = {
+		{32, 80, 48, 96},
+		{48, 80, 64, 96},
+	};
+
+	RECT rect6[2] = {
+		{64, 80, 80, 96},
+		{80, 80, 96, 96},
+	};
+
+	RECT rcLast = {16, 0, 32, 16};
+
+	if (npc->direct == 0)
+	{
+		if (++npc->ani_wait > 2)
+		{
+			npc->ani_wait = 0;
+			++npc->ani_no;
+		}
+
+		if (npc->ani_no > 1)
+			npc->ani_no = 0;
+	}
+
 	if (gBack.type == 5 || gBack.type == 6)
 	{
 		if (npc->act_no == 0)
 		{
-			// Set state
 			npc->act_no = 1;
-
-			// Set random speed
-			npc->ym = Random(-0x80, 0x80);
+			npc->ym = Random(-0x20, 0x20);
 			npc->xm = Random(0x7F, 0x100);
 		}
 
-		// Blow to the left
 		npc->xm -= 8;
 
-		// Destroy when off-screen
 		if (npc->x < 80 * 0x200)
 			npc->cond = 0;
 
-#ifdef FIX_BUGS
-		// Limit speed
-		if (npc->xm < -0x600)
-			npc->xm = -0x600;
-#else
-		// Limit speed (except pixel applied it to the X position)
-		if (npc->x < -0x600)
-			npc->x = -0x600;
-#endif
+		if (npc->x < -3 * 0x200)
+			npc->x = -3 * 0x200;
 
-		// Bounce off walls
 		if (npc->flag & 1)
 			npc->xm = 0x100;
+
 		if (npc->flag & 2)
 			npc->ym = 0x40;
+
 		if (npc->flag & 8)
 			npc->ym = -0x40;
+
+		npc->x += npc->xm;
+		npc->y += npc->ym;
 	}
-	// When not in wind
-	else
+
+	switch (npc->exp)
 	{
-		if (npc->act_no == 0)
-		{
-			// Set state
-			npc->act_no = 1;
-			npc->ani_no = Random(0, 4);
+		case 2:
+			npc->rect = rect2[npc->ani_no];
+			break;
 
-			// Random speed
-			npc->xm = Random(-0x200, 0x200);
-			npc->ym = Random(-0x400, 0);
-
-			// Random direction (reverse animation or not)
-			if (Random(0, 1) != 0)
-				npc->direct = 0;
-			else
-				npc->direct = 2;
-		}
-
-		// Gravity
-		if (npc->flag & 0x100)
-			npc->ym += 0x15;
-		else
-			npc->ym += 0x2A;
-
-		// Bounce off walls
-		if (npc->flag & 1 && npc->xm < 0)
-			npc->xm *= -1;
-		if (npc->flag & 4 && npc->xm > 0)
-			npc->xm *= -1;
-
-		// Bounce off ceiling
-		if (npc->flag & 2 && npc->ym < 0)
-			npc->ym *= -1;
-
-		// Bounce off floor
-		if (npc->flag & 8)
-		{
-			PlaySoundObject(07, SOUND_MODE_PLAY);
-			npc->ym = -0x280;
-			npc->xm = 2 * npc->xm / 3;
-		}
-
-		// Play bounce song (and try to clip out of floor if stuck)
-		if (npc->flag & 0xD)
-		{
-			PlaySoundObject(07, SOUND_MODE_PLAY);
-			if (++npc->count2 > 2)
-				npc->y -= 1 * 0x200;
-		}
-		else
-		{
-			npc->count2 = 0;
-		}
-
-		// Limit speed
-		if (npc->xm < -0x5FF)
-			npc->xm = -0x5FF;
-		if (npc->xm > 0x5FF)
-			npc->xm = 0x5FF;
-		if (npc->ym < -0x5FF)
-			npc->ym = -0x5FF;
-		if (npc->ym > 0x5FF)
-			npc->ym = 0x5FF;
+		case 6:
+			npc->rect = rect6[npc->ani_no];
+			break;
 	}
-
-	// Move
-	npc->y += npc->ym;
-	npc->x += npc->xm;
-
-	// Get framerects
-	RECT rect[6] = {
-		{0x00, 0x10, 0x10, 0x20},
-		{0x10, 0x10, 0x20, 0x20},
-		{0x20, 0x10, 0x30, 0x20},
-		{0x30, 0x10, 0x40, 0x20},
-		{0x40, 0x10, 0x50, 0x20},
-		{0x50, 0x10, 0x60, 0x20},
-	};
-
-	RECT rcNo = {0, 0, 0, 0};
-
-	// Animate
-	++npc->ani_wait;
 
 	if (npc->direct == 0)
-	{
-		if (npc->ani_wait > 2)
-		{
-			npc->ani_wait = 0;
+		++npc->count1;
 
-			if (++npc->ani_no > 5)
-				npc->ani_no = 0;
-		}
-	}
-	else
-	{
-		if (npc->ani_wait > 2)
-		{
-			npc->ani_wait = 0;
-
-			if (--npc->ani_no < 0)
-				npc->ani_no = 5;
-		}
-	}
-
-	npc->rect = rect[npc->ani_no];
-
-	// Size
-	if (npc->act_no != 0)
-	{
-		switch (npc->exp)
-		{
-			case 5:
-				npc->rect.top += 16;
-				npc->rect.bottom += 16;
-				break;
-
-			case 20:
-				npc->rect.top += 32;
-				npc->rect.bottom += 32;
-				break;
-		}
-
-		npc->act_no = 1;
-	}
-
-	// Delete after 500 frames
-	if (++npc->count1 > 500 && npc->ani_no == 5 && npc->ani_wait == 2)
+	if (npc->count1 > 550)
 		npc->cond = 0;
 
-	// Blink after 400 frames
-	if (npc->count1 > 400)
-		if (npc->count1 / 2 % 2)
-			npc->rect = rcNo;
+	if (npc->count1 > 500 && npc->count1 / 2 % 2)
+		npc->rect.right = 0;
+
+	if (npc->count1 > 547)
+		npc->rect = rcLast;
 }
 
 // Igor (boss)

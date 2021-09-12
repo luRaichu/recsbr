@@ -741,15 +741,6 @@ static int ModeAction(void)
 				}
 			}
 		}
-
-		if (g_GameFlags & 2)
-		{
-			if (gKeyTrg & gKeyArms)
-				RotationArms();
-			else if (gKeyTrg & gKeyArmsRev)
-				RotationArmsRev();
-		}
-
 		if (swPlay % 2)	// This is always true
 		{
 			switch (TextScriptProc())

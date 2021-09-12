@@ -12,7 +12,7 @@
 #include "Backends/Rendering.h"
 
 // Uncomment for that authentic pre-Windows Vista feel
-//#define DISABLE_FONT_ANTIALIASING
+#define DISABLE_FONT_ANTIALIASING
 
 typedef struct CachedGlyph
 {

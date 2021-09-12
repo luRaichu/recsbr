@@ -438,22 +438,24 @@ void ActNpc125(NPCHAR *npc)
 // Puppy (running)
 void ActNpc126(NPCHAR *npc)
 {
-	RECT rcLeft[6] = {
+	RECT rcLeft[7] = {
 		{48, 144, 64, 160},
 		{64, 144, 80, 160},
 		{48, 144, 64, 160},
 		{80, 144, 96, 160},
 		{96, 144, 112, 160},
 		{112, 144, 128, 160},
+		{32, 144, 48, 160},
 	};
 
-	RECT rcRight[6] = {
+	RECT rcRight[7] = {
 		{48, 160, 64, 176},
 		{64, 160, 80, 176},
 		{48, 160, 64, 176},
 		{80, 160, 96, 176},
 		{96, 160, 112, 176},
 		{112, 160, 128, 176},
+		{32, 160, 48, 176},
 	};
 
 	switch (npc->act_no)
@@ -471,7 +473,7 @@ void ActNpc126(NPCHAR *npc)
 				npc->ani_no = 1;
 			}
 
-			if (npc->x - (96 * 0x200) < gMC.x && npc->x + (96 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
+			if (/*npc->x - (96 * 0x200) < gMC.x && npc->x + (96 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y*/npc->shock)
 			{
 				if (npc->x > gMC.x)
 					npc->direct = 0;
@@ -479,7 +481,7 @@ void ActNpc126(NPCHAR *npc)
 					npc->direct = 2;
 			}
 
-			if (npc->x - (32 * 0x200) < gMC.x && npc->x + (32 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y)
+			if (/*npc->x - (32 * 0x200) < gMC.x && npc->x + (32 * 0x200) > gMC.x && npc->y - (32 * 0x200) < gMC.y && npc->y + (16 * 0x200) > gMC.y*/npc->shock)
 			{
 				if (npc->x > gMC.x)
 					npc->direct = 2;
@@ -519,8 +521,7 @@ void ActNpc126(NPCHAR *npc)
 			}
 			else
 			{
-				npc->ani_no = 5;
-				npc->ani_wait = 0;
+				npc->ani_no = 6;
 			}
 
 			if (npc->xm < 0 && npc->flag & 1)

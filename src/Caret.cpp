@@ -11,7 +11,7 @@
 
 CARET gCrt[CARET_MAX];
 
-CARET_TABLE gCaretTable[21] = {
+CARET_TABLE gCaretTable[24] = {
 	{0, 0},
 	{0x800, 0x800},
 	{0x1000, 0x1000},
@@ -33,6 +33,9 @@ CARET_TABLE gCaretTable[21] = {
 	{0x1000, 0x1000},
 	{0x1000, 0x1000},
 	{0x1000, 0x1000},
+	{0x800, 0x800},
+	{0x800, 0x800},
+	{0x800, 0x800},
 };
 
 void InitCaret(void)
@@ -253,7 +256,7 @@ void ActCaret05(CARET *crt)
 	crt->rect = rect[crt->ani_no];
 }
 
-void ActCaret07(CARET *crt)
+void ActCaret07(CARET *crt) // Booster smoke
 {
 	RECT rcLeft[7] = {
 		{56, 0, 64, 8},
@@ -690,9 +693,33 @@ void ActCaret20(CARET* crt)
 	if (crt->y > gMap.length * 0x200 * 0x10)
 		crt->cond = 0;
 }
+void ActCaret21(CARET* crt)
+{
+	RECT rect[1] = {
+		{128, 120, 136, 128},
+	};
 
+	if (++crt->count1 > 30)
+		crt->cond = 0;
+
+	if (crt->count1 < 3)
+		crt->ym = -8 * 0x200;
+	else
+		crt->ym = 0;
+
+	crt->y += crt->ym;
+	crt->rect = rect[crt->ani_no];
+}
+void ActCaret22(CARET* crt)
+{
+
+}
+void ActCaret23(CARET* crt)
+{
+
+}
 typedef void (*CARETFUNCTION)(CARET*);
-CARETFUNCTION gpCaretFuncTbl[21] =
+CARETFUNCTION gpCaretFuncTbl[24] =
 {
 	ActCaret00,
 	ActCaret01,
@@ -715,6 +742,9 @@ CARETFUNCTION gpCaretFuncTbl[21] =
 	ActCaret18,
 	ActCaret19,
 	ActCaret20,
+	ActCaret21,
+	ActCaret22,
+	ActCaret23,
 };
 
 void ActCaret(void)

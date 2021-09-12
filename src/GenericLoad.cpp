@@ -39,7 +39,7 @@ static const struct
 	{7, "PixTone/007.pxt", SOUND_TYPE_PIXTONE}, //nothing, DO NOT EDIT OR I'LL KILL YOU
 	{11, "PixTone/011.pxt", SOUND_TYPE_PIXTONE},//swell sound, used in ballos fight
 	{12, "PixTone/012.pxt", SOUND_TYPE_PIXTONE},//door
-	{14, "PixTone/014.pxt", SOUND_TYPE_PIXTONE},//destroy snack block
+	{14, "PixTone/045.pxt", SOUND_TYPE_PIXTONE},//destroy snack block
 	{15, "PixTone/015.pxt", SOUND_TYPE_PIXTONE},//touch exp dorito
 	{16, "Wav/pchurt.ogg", SOUND_TYPE_OTHER},//jump
 	{17, "PixTone/007.pxt", SOUND_TYPE_PIXTONE},//hurt
@@ -110,15 +110,6 @@ static const struct
 	{115, "PixTone/115.pxt", SOUND_TYPE_PIXTONE},//Core thrusting towards your ass
 	{116, "PixTone/116.pxt", SOUND_TYPE_PIXTONE},//epic idk sound
 	{117, "PixTone/117.pxt", SOUND_TYPE_PIXTONE},//idk sound
-
-	//drams
-	/*{150, "PixTone/150.wav", SOUND_TYPE_DABABYAUDIO},
-	{151, "PixTone/151.wav", SOUND_TYPE_DABABYAUDIO},
-	{152, "PixTone/152.wav", SOUND_TYPE_DABABYAUDIO},
-	{153, "PixTone/153.wav", SOUND_TYPE_DABABYAUDIO},
-	{154, "PixTone/154.wav", SOUND_TYPE_DABABYAUDIO},
-	{155, "PixTone/155.wav", SOUND_TYPE_DABABYAUDIO}*/
-
 
 };
 
@@ -242,12 +233,14 @@ BOOL LoadGenericData(void)
 
 	if (bError)
 		return FALSE;
+	
     LoadSoundObject("data/PixTone/150.wav", 150);
     LoadSoundObject("data/PixTone/151.wav", 151);
     LoadSoundObject("data/PixTone/152.wav", 152);
     LoadSoundObject("data/PixTone/153.wav", 153);
     LoadSoundObject("data/PixTone/154.wav", 154);
     LoadSoundObject("data/PixTone/155.wav", 155);
+
 	MakeSurface_Generic(WINDOW_WIDTH, WINDOW_HEIGHT, SURFACE_ID_SCREEN_GRAB, TRUE);
 	MakeSurface_Generic(320, 240, SURFACE_ID_LEVEL_BACKGROUND, FALSE);
 	MakeSurface_Generic(WINDOW_WIDTH, WINDOW_HEIGHT, SURFACE_ID_MAP, TRUE);

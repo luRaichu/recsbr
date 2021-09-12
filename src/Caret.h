@@ -25,11 +25,13 @@ struct CARET
 	int ani_wait;
 	int view_left;
 	int view_top;
+	int count1;
+	int count2;
 	RECT rect;
 };
 
 extern CARET gCrt[CARET_MAX];
-extern CARET_TABLE gCaretTable[21];
+extern CARET_TABLE gCaretTable[24];
 
 void InitCaret(void);
 void ActCaret(void);

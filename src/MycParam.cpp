@@ -93,21 +93,8 @@ void AddExpMyChar(int x)
 			}
 		}
 	}
-
-	if (gArmsData[gSelectedArms].code != 13)
-	{
-		gMC.exp_count += x;
-		gMC.exp_wait = 30;
-		gArmsData[gSelectedArms].level = 1; //sorry for this really shitty copypasted code but basically what this does is <ZAM every time you pickup EXP.
-		gArmsData[gSelectedArms].exp = 0;   //it's dirty, and Bread would probably scream at me, but hey it works no more levels
-
-	}
-	else
-	{
-		gMC.exp_wait = 10;
 		gArmsData[gSelectedArms].level = 1;
 		gArmsData[gSelectedArms].exp = 0;
-	}
 }
 
 void ZeroExpMyChar(void)
@@ -266,7 +253,7 @@ void PutActiveArmsList(void)
 	rect.right = rect.left + 32;
 	// Put your X and Y values here
 
-	PutBitmap3(&grcGame, PixelToScreenCoord(4 + gArmsEnergyX), PixelToScreenCoord(16), &rect, SURFACE_ID_ARMS_IMAGE);
+	PutBitmap3(&grcGame, PixelToScreenCoord(20), PixelToScreenCoord(16), &rect, SURFACE_ID_ARMS_IMAGE);
 
 }
 void PutArmsEnergy(BOOL flash)
@@ -278,16 +265,11 @@ void PutArmsEnergy(BOOL flash)
 	RECT rcView = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 	RECT rcNone = { 80, 48, 96, 56 };
 
-	if (gArmsEnergyX > 16)
-		gArmsEnergyX -= 2;
-	if (gArmsEnergyX < 16)
-		gArmsEnergyX += 2;
-
 	// Draw max ammo
 	if (gArmsData[gSelectedArms].max_num)
 	{
 
-		PutNumber4(gArmsEnergyX + 20, 26, gArmsData[gSelectedArms].num, FALSE);
+		PutNumber4(56, 24, gArmsData[gSelectedArms].num, FALSE);
 		//PutNumber4(gArmsEnergyX + 32, 24, gArmsData[gSelectedArms].max_num, FALSE);
 	}
 	else
@@ -357,7 +339,7 @@ void PutMyLife(BOOL flash)
 			&grcGame, // Target
 			// On the next two lines TT7 forgot PixelToScreenCoord, which is needed for the PutBitmap to work on resolutions other than 1x 
 			PixelToScreenCoord(16 + (8 * i)), // X position, offset by 8 for every 1 in i
-			PixelToScreenCoord(224), // Y position,
+			PixelToScreenCoord(225), // Y position,
 			& rcLife[gMC.life - 1 > i], // Which rect to use, 'gMC.life - 1 > i' checks if  the current heart that is being drawn is full or not, returns 0 if it's not and 1 if it is
 			SURFACE_ID_TEXT_BOX); // Surface
 		if (gMC.life <= 1)
@@ -374,8 +356,8 @@ void PutMyLife(BOOL flash)
 void PutCion()
 {
 	RECT rcCion = {208, 112, 226, 118};
-	PutBitmap3(&grcGame, 99, 434, &rcCion, SURFACE_ID_TEXT_BOX);
-	PutNumber4(16, 216, cion, FALSE);
+	PutBitmap3(&grcGame, PixelToScreenCoord(51), PixelToScreenCoord(218), &rcCion, SURFACE_ID_TEXT_BOX);
+	PutNumber4(17, 217, cion, FALSE);
 }
 
 void PutMyAir(int x, int y)
