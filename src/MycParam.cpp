@@ -246,14 +246,14 @@ void AddMaxLifeMyChar(int val)
 
 void PutActiveArmsList(void)
 {
-	RECT rect = { 0, 0, 0, 32 };
+	RECT rect = {0, 0, 0, 16};
 
 	// Draw icon
 	rect.left = gArmsData[gSelectedArms].code * 32;
 	rect.right = rect.left + 32;
 	// Put your X and Y values here
 
-	PutBitmap3(&grcGame, PixelToScreenCoord(20), PixelToScreenCoord(16), &rect, SURFACE_ID_ARMS_IMAGE);
+	PutBitmap3(&grcGame, PixelToScreenCoord(16), PixelToScreenCoord(16), &rect, SURFACE_ID_ARMS_IMAGE);
 
 }
 void PutArmsEnergy(BOOL flash)
@@ -269,7 +269,7 @@ void PutArmsEnergy(BOOL flash)
 	if (gArmsData[gSelectedArms].max_num)
 	{
 
-		PutNumber4(56, 24, gArmsData[gSelectedArms].num, FALSE);
+		PutNumber4(40, 24, gArmsData[gSelectedArms].num, FALSE);
 		//PutNumber4(gArmsEnergyX + 32, 24, gArmsData[gSelectedArms].max_num, FALSE);
 	}
 	else
@@ -327,11 +327,15 @@ void PutArmsEnergy(BOOL flash)
 
 void PutMyLife(BOOL flash)
 {
+	int e = 128;
 	RECT rcLife[2] = {
 		{0, 151, 7, 158},
 		{0, 144, 7, 151},
-		
 	};
+	if (flash == TRUE && (gMC.shock / 2) % 2)
+		return;
+	if (flash == TRUE && (e / 2) % 2 && gMC.life == 1)
+		return;
 	for (int i = 0; i < gMC.max_life - 1; i++) // For every 1 in max life, add 1 to i, and run the following code
 	{
 		// Put a heart
@@ -342,11 +346,6 @@ void PutMyLife(BOOL flash)
 			PixelToScreenCoord(225), // Y position,
 			& rcLife[gMC.life - 1 > i], // Which rect to use, 'gMC.life - 1 > i' checks if  the current heart that is being drawn is full or not, returns 0 if it's not and 1 if it is
 			SURFACE_ID_TEXT_BOX); // Surface
-		if (gMC.life <= 1)
-		{
-			//PlaySoundObject(31, SOUND_MODE_PLAY);
-			//to be continued...
-		}
 	}
 
 

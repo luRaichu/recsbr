@@ -19,8 +19,8 @@ enum KeyBind
 	KEY_ARMS =      0x00000080,
 	KEY_ARMSREV =   0x00000100,
 	//Function keys
-	KEY_F1 =        0x00000400,
-	KEY_F2 =        0x00000800,
+	KEY_F1 =        0x00000031,
+	KEY_F2 =        0x00000032,
 	//Inventory
 	KEY_ITEM =      0x00001000,
 	//Okay and cancel keys

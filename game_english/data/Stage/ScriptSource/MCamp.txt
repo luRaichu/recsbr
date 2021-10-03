@@ -19,21 +19,20 @@
 <KEY<MSG...<NOD
 What are you doing here?<NOD<END
 #0121
-<AM+0005:1000<AM+0003:1000<AM+0004:1000<AM+0001:1000<KEY<MSGWatch out!<NOD
-As long as I can remember,
+//<AM+0005:1000<AM+0003:1000<AM+0004:1000<AM+0001:1000
+//<DAT0004:0001:0300
+<DAT0009:0013:0300<KEY<MSGAs long as I can remember,
 this cave has been
-full of soap monsters.<NOD
-The small ones are harmless,<NOD
-but the huge soap called Pooh
-is evil.<NOD
-He imprisioned us and forced us
-to grow flowers many years ago,<NOD
-and we still are
-subject to his tyranny.<NOD<END
+full of soap monsters...<NOD<END
 #0300
-<ITJ0008:0301
-<KEY<MSG*Crackle* *Snap!*<NOD<FLJ0242:0000
-The charcoal burns fiercely.<NOD<END
+<KEY<MSGwhat you know about rolling down
+in the deep<NOD
+when your brain goes numb
+you can call that mental freeze<NOD
+when these people talk too much<NOD
+put that Shit in slow motion ey<NOD
+I feel like an astronaut 
+in the ocean ey<NOD<END
 #0301
 <KEY<GIT1008<MSGDo you want to use the
 =Jellyfish Juice=?<YNJ0000<CLO<GIT0000

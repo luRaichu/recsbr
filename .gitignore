@@ -101,3 +101,6 @@ build.sh
 
 # Exclude saves
 *.dat
+
+# Exclude Ctone
+/game_english/data/PixTone/ctone

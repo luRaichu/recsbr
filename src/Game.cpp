@@ -756,14 +756,11 @@ static int ModeAction(void)
 		PutMapName(FALSE);
 		PutTimeCounter(16, 8);
 
-		if (g_GameFlags & 2)
-		{
-			PutMyLife(TRUE);
-			PutCion();
-			PutMyAir((WINDOW_WIDTH / 2) - 40, (WINDOW_HEIGHT / 2) - 16);
-			PutActiveArmsList();
-			PutArmsEnergy(TRUE);
-		}
+		PutMyLife(TRUE);
+		PutCion();
+		PutMyAir((WINDOW_WIDTH / 2) - 40, (WINDOW_HEIGHT / 2) - 16);
+		PutActiveArmsList();
+		PutArmsEnergy(TRUE);
 
 		if (g_GameFlags & 8)
 		{

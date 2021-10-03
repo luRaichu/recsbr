@@ -39,7 +39,7 @@ unsigned int gOldPos;
 MusicID gOldNo;
 
 const STAGE_TABLE gTMTDefault[95] = {
-	STAGE_ENTRY( "0","0", 4, "bk0", "Guest", "0", 0, "Null", "troll" ),
+STAGE_ENTRY( "0","0", 4, "bk0", "Guest", "0", 0, "Null", "troll" ),
 STAGE_ENTRY( "Cent","Intro", 7, "bk0", "0", "0", 0, "   ", "troll" ),
 STAGE_ENTRY( "Cave","Start", 0, "bkBlack", "Cemet", "0", 0, "Start Point", "troll" ),
 STAGE_ENTRY( "Cave","MCamp", 0, "bkBlack", "Guest", "Guest", 0, "Mimiga Camp", "troll" ),
@@ -311,7 +311,7 @@ static const struct
 	const char *loop_file_path;
 	int type;
 	bool loop;	// Only applicable to non-Organya songs
-} music_table[42] = {
+} music_table[43] = {
 	{"Resource/ORG/XXXX.org", NULL, MUSIC_TYPE_ORGANYA, true},
 	{"Resource/ORG/Wanpaku.org", NULL, MUSIC_TYPE_ORGANYA, true},
 	{"Resource/ORG/Anzen.org", NULL, MUSIC_TYPE_ORGANYA, true},
@@ -353,7 +353,8 @@ static const struct
 	{"Resource/ORG/Marine.org", NULL, MUSIC_TYPE_ORGANYA, true},
 	{"Resource/ORG/Ballos.org", NULL, MUSIC_TYPE_ORGANYA, true},
 	{"Resource/ORG/Toroko.org", NULL, MUSIC_TYPE_ORGANYA, false},
-	{"Resource/ORG/White.org", NULL, MUSIC_TYPE_ORGANYA, true}
+	{"Resource/ORG/White.org", NULL, MUSIC_TYPE_ORGANYA, true},
+	{"Resource/ORG/kb_boss_a.ptcop", NULL, MUSIC_TYPE_OTHER, true}
 };
 
 void ChangeMusic(MusicID no)

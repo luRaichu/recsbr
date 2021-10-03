@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <string>
+#include <iostream>
 #include <ctime>
 
 #include "WindowsWrapper.h"
@@ -56,6 +56,8 @@ static unsigned long nod_color;
 
 unsigned int cion = 0;
 unsigned int gMIMCurrentNum = 0;
+
+using namespace std;
 
 // Initialize and end tsc
 BOOL InitTextScript2(void)
@@ -1332,10 +1334,14 @@ int TextScriptProc(void)
 						time_t ttime = time(0);
     					tm *local_time = localtime(&ttime);
 
-						if (local_time->tm_mon == x + 1 && local_time->tm_mday)
-						{
+						cout << local_time->tm_mon;
+						cout << local_time->tm_mday;
+
+						if (local_time->tm_mon == x + 1 && local_time->tm_mday == y)
 							JumpTextScript(z);
-						}
+						else
+							//gTS.p_read += 18;
+							JumpTextScript(z);
 					}
 					else if (IS_COMMAND('E','V','E'))
 					{

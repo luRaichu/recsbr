@@ -254,7 +254,48 @@ void PlaySoundObject(int no, SoundMode mode)
 	}
 #endif
 }
+/*BOOL InitDramObject(const char* resname, int no)
+{
+    HRSRC hrscr;
+    DSBUFFERDESC dsbd;
+    DWORD *lpdword;//リソースのアドレス (Resource address)
+    // リソースの検索 (Search for resources)
+	ReleaseDramObject(no); //ここにおいてみた。(I saw it here.)
 
+    if((hrscr = FindResource(NULL, resname, "WAVE")) == NULL)
+	{
+        return(FALSE);
+	}
+    // リソースのアドレスを取得 (Get the address of the resource)
+    lpdword = (DWORD*)LockResource(LoadResource(NULL, hrscr));
+	// 二次バッファの生成 (Generation of secondary buffer)
+	memset(&dsbd, sizeof(DSBUFFERDESC));
+	dsbd.dwSize = sizeof(DSBUFFERDESC);
+	dsbd.dwFlags = 
+		DSBCAPS_STATIC|
+		DSBCAPS_STICKYFOCUS
+		|DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY;
+	dsbd.dwBufferBytes = *(DWORD*)((BYTE*)lpdword+0x36);//WAVEデータのサイズ (Wave data size)
+	dsbd.lpwfxFormat = (LPWAVEFORMATEX)(lpdword+5); 
+	if(lpDS->CreateSoundBuffer(&dsbd, &lpDRAMBUFFER[no],NULL) != DS_OK) return(FALSE);
+    LPVOID lpbuf1, lpbuf2;
+    DWORD dwbuf1, dwbuf2;
+    // 二次バッファのロック (Secondary buffer lock)
+    lpDRAMBUFFER[no]->Lock(0, *(DWORD*)((BYTE*)lpdword+0x36),
+                        &lpbuf1, &dwbuf1, &lpbuf2, &dwbuf2, 0); 
+	// 音源データの設定 (Sound source data settings)
+	CopyMemory(lpbuf1, (BYTE*)lpdword+0x3a, dwbuf1);
+    if(dwbuf2 != 0){
+		CopyMemory(lpbuf2, (BYTE*)lpdword+0x3a+dwbuf1, dwbuf2);
+		
+	}
+
+	// 二次バッファのロック解除 (Unlock secondary buffer)
+	lpDRAMBUFFER[no]->Unlock(lpbuf1, dwbuf1, lpbuf2, dwbuf2); 
+	lpDRAMBUFFER[no]->SetCurrentPosition(0);
+
+    return(TRUE);
+}*/
 void ChangeSoundFrequency(int no, unsigned long rate)	// 100がMIN9999がMAXで2195?がﾉｰﾏﾙ (100 is MIN, 9999 is MAX, and 2195 is normal)
 {
 	if (!audio_backend_initialised)

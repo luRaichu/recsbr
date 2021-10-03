@@ -734,8 +734,8 @@ void InitTextObject(const char *name)
 			break;
 
 		default:
-			height = 9 * mag;
-			width = (17 * mag) / 2;	// 8.5
+			height = 12 * mag;
+			width = 12 * mag;
 #endif
 	}
 
