@@ -25,7 +25,6 @@ int gSelectedItem;
 int gCampTitleY;
 int anime;
 
-RECT the_rc;
 RECT rcBoxBody[6] = {
 	{0, 208, 244, 214}, 
 	{0, 208, 244, 248}, 
@@ -347,12 +346,10 @@ void PutCampObject(void)
 	RECT rcTitle2 = {80, 56, 144, 64};
 	//RECT rcBoxTop = {0, 208, 244, 23};
 	//RECT rcBoxBottom = {0, 16, 244, 24};
-
-	anime = 0;
 	
 	// Draw box
 	for (i = 0; i < 5; ++i)
-		PutBitmap3(&rcView, PixelToScreenCoord((WINDOW_WIDTH / 2) - 122), PixelToScreenCoord(8), &the_rc, SURFACE_ID_TEXT_BOX);
+		PutBitmap3(&rcView, PixelToScreenCoord((WINDOW_WIDTH / 2) - 122), PixelToScreenCoord(8), &rcBoxBody[5], SURFACE_ID_TEXT_BOX);
 	//for (i = 1; i < 18; ++i)
 		//PutBitmap3(&rcView, PixelToScreenCoord((WINDOW_WIDTH / 2) - 122), PixelToScreenCoord(((WINDOW_HEIGHT / 2) - 120) + ((i + 1) * 8)), &rcBoxBody, SURFACE_ID_TEXT_BOX);
 	//PutBitmap3(&rcView, PixelToScreenCoord((WINDOW_WIDTH / 2) - 122), PixelToScreenCoord(((WINDOW_HEIGHT / 2) - 120) + ((i + 1) * 8)), &rcBoxBottom, SURFACE_ID_TEXT_BOX);
@@ -378,15 +375,15 @@ void PutCampObject(void)
 		rcArms.bottom = rcArms.top + 16;
 
 		// Draw the icon, slash and "Lv"
-		PutBitmap3(&rcView, PixelToScreenCoord((i * 40) + (WINDOW_WIDTH / 2) - 112), PixelToScreenCoord((WINDOW_HEIGHT / 2) - 96), &rcArms, SURFACE_ID_ARMS_IMAGE);
-		PutBitmap3(&rcView, PixelToScreenCoord((i * 40) + (WINDOW_WIDTH / 2) - 112), PixelToScreenCoord((WINDOW_HEIGHT / 2) - 64), &rcPer, SURFACE_ID_TEXT_BOX);
+		PutBitmap3(&rcView, PixelToScreenCoord(((i % 6) * 48) + (WINDOW_WIDTH / 2) - 112), PixelToScreenCoord(((i / 6) * 16) + (WINDOW_HEIGHT / 2) - 44), &rcArms, SURFACE_ID_ARMS_IMAGE);
+		//PutBitmap3(&rcView, PixelToScreenCoord((i * 40) + (WINDOW_WIDTH / 2) - 112), PixelToScreenCoord((WINDOW_HEIGHT / 2) - 64), &rcPer, SURFACE_ID_TEXT_BOX);
 		//PutBitmap3(&rcView, PixelToScreenCoord((i * 40) + (WINDOW_WIDTH / 2) - 112), PixelToScreenCoord((WINDOW_HEIGHT / 2) - 80), &rcLv, SURFACE_ID_TEXT_BOX);
 		//PutNumber4((i * 40) + (WINDOW_WIDTH / 2) - 112, (WINDOW_HEIGHT / 2) - 80, gArmsData[i].level, FALSE);
 
 		// Draw ammo
 		if (gArmsData[i].max_num)
 		{
-			PutNumber4((i * 40) + (WINDOW_WIDTH / 2) - 96, (WINDOW_HEIGHT / 2) - 87, gArmsData[i].num, FALSE);
+			PutNumber4(((i % 6) * 48) + (WINDOW_WIDTH / 2) - 96, ((i / 6) * 16) + (WINDOW_HEIGHT / 2) - 36, gArmsData[i].num, FALSE);
 			//PutNumber4((i * 40) + (WINDOW_WIDTH / 2) - 112, (WINDOW_HEIGHT / 2) - 64, gArmsData[i].max_num, FALSE);
 		}
 		else
@@ -491,11 +488,6 @@ int CampLoop(void)
 			case enum_ESCRETURN_restart:
 				return enum_ESCRETURN_restart;	// Go to game intro
 		}
-		// Animate character cursor
-		if (++anime >= 40)
-			anime = 0;
-
-		the_rc = rcBoxBody[5];
 
 		// Get currently displayed image
 		PutBitmap4(&rcView, 0, 0, &rcView, SURFACE_ID_SCREEN_GRAB);

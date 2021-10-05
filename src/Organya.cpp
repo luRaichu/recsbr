@@ -752,23 +752,15 @@ void OrgData::PlayData(void)
 	}
 
 	// ドラムの再生 (Drum playback)
-	for (i = MAXMELODY; i < MAXTRACK; i++)
-	{
-		if (np[i] != NULL && PlayPos == np[i]->x)	// 音が来た。 (The sound has come.)
-		{
-			if (np[i]->y != KEYDUMMY && !g_mute[i])	// ならす (Tame)
-				PlayDramObject(np[i]->y, 1, i - MAXMELODY);
-
-			if (np[i]->pan != PANDUMMY)
-				ChangeDramPan(np[i]->pan, i - MAXMELODY);
-			if (np[i]->volume != VOLDUMMY)
-				TrackVol[i] = np[i]->volume;
-
-			np[i] = np[i]->to;	// 次の音符を指す (Points to the next note)
+	for(i = MAXMELODY; i < MAXTRACK; i++){
+		if(np[i] != NULL && PlayPos == np[i]->x ){//音が来た。
+			if(np[i]->y != KEYDUMMY){//ならす
+				if(mute[i] == 0)PlayDramObject(np[i]->y,1,i-MAXMELODY);
+			}
+			if(np[i]->pan != PANDUMMY)ChangeDramPan(np[i]->pan,i-MAXMELODY);
+			if(np[i]->volume != VOLDUMMY)ChangeDramVolume(np[i]->volume,i-MAXMELODY);
+			np[i] = np[i]->to;//次の音符を指す
 		}
-
-		if (np[i])
-			ChangeDramVolume(TrackVol[i] * Volume / 0x7F, i - MAXMELODY);
 	}
 
 	// Looping
