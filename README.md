@@ -1,80 +1,6 @@
-# THIS BRANCH HAS BEEN DISCONTINUED
+# RECSBR
 
-I don't want to work on an enhanced Cave Story anymore, or at least not one
-where I have to cater to such a massive range of people with different
-expectations.
-
-There's a fork coming out soon called 'CuckyCSE2' which will probably be this
-branch's successor, so keep an eye out for that.
-
-The original readme is below:
-
-[![Build Status](https://travis-ci.com/Clownacy/CSE2.svg?branch=enhanced-lite)](https://travis-ci.com/Clownacy/CSE2)
-
-## Table of Contents
-
-This repo has multiple branches:
-
-Branch | Description
---------|--------
-[accurate](https://www.github.com/Clownacy/CSE2/tree/accurate) | The main decompilation branch. The code intended to be as close to the original as possible, down to all the bugs and platform-dependencies.
-[portable](https://www.github.com/Clownacy/CSE2/tree/portable) | This branch ports the engine away from WinAPI and DirectX, and addresses numerous portability issues, allowing it to run on other platforms.
-[enhanced-lite](https://www.github.com/Clownacy/CSE2/tree/enhanced-lite) | Based on the `portable` branch, this branch is **intended for modders**, and adds several enhancements and features to the engine.
-[enhanced](https://www.github.com/Clownacy/CSE2/tree/enhanced) | Based on the `enhanced-lite` branch, this branch is **intended for players**, and adds further enhancements and features to the engine.
-[emscripten](https://www.github.com/Clownacy/CSE2/tree/emscripten) | Modifies the engine to build with Emscripten, [allowing it to run in web browsers](http://sonicresearch.org/clownacy/cave.html) (no longer maintained).
-[wii](https://www.github.com/Clownacy/CSE2/tree/wii) | Ports the engine to the Nintendo Wii (no longer maintained).
-
-# CSE2 (Enhanced-lite)
-
-CSE2 is a decompilation of Cave Story.
-
-This branch builds upon the `portable` branch, adding several enhancements including:
-* Widescreen
-* Options menu:
-  * Control remapping (keyboard and gamepad)
-  * V-sync toggle
-  * 50FPS/60FPS toggle
-  * Option to disable the design choice that locks sprites to a 320x240 grid when drawn, making them move smoother
-* Bugfixes
-
-Also included are enhancements specifically for modders:
-* PNG support
-* Full alpha blending support
-* Fixed text blending, utilising the aforementioned alpha support
-* All resource files moved to the data folder
-* [Booster's Lab](https://github.com/taedixon/boosters-lab) support (open 'data/mrmap.bin')
-* PixTone sounds split to .pxt files
-* Support for Ogg Vorbis, FLAC, .it, .xm, .mod, .s3m, and PxTone audio formats for music and SFX
-* Support for high-resolution sprites (see `SPRITE_SCALE` in CommonDefines.h)
-* Extra TSC commands (TODO: link docs for these)
-  * <MS4
-  * <MIM
-  * <PHY
-* No TSC script size limit (the vanilla limit is around 0x5000 bytes)
-
-Supported platforms include...
-* Windows
-* Linux
-* macOS
-* Wii U
-
-![Screenshot](screenshot.png)
-
-## Background
-
-When Pixel made Cave Story, he compiled the original Windows EXE with no optimisations. This left the generated assembly code extremely verbose and easy to read. It also made the code very decompiler-friendly, since the assembly could be mapped directly back to the original C(++) code.
-
-Technically, this alone made a decompilation feasible, as was the case for [the Super Mario 64 decompilation project](https://github.com/n64decomp/sm64) - however, there was more to be found...
-
-In 2007, a Linux port of Cave Story was made by Peter Mackay and Simon Parzer. Details about it can be found on [Peter's old blog](https://web.archive.org/web/20070911202919/http://aaiiee.wordpress.com:80/). This port received an update in 2011, including two shiny new executables. What Peter and Simon didn't realise was that they left huge amounts of debugging information in these executables, including the names of every C++ source file, as well as the variables, functions, and structs they contained.
-
-This was a goldmine of information about not just the game's inner-workings, but its _source code._ This is the same lucky-break [the Diablo decompilation project](https://github.com/diasurgical/devilution) had. With it, much of the game's code was pre-documented and explained _for_ us, saving us the effort of doing it ourselves. In fact, the combination of easy-to-decompile code, and a near-full set of function/variable names, reduced much of the decompilation process to mere copy-paste.
-
-To top it all off, some of Cave Story's original source code would eventually see the light of day...
-
-In early 2018, the Organya music engine was [released on GitHub](https://github.com/shbow/organya) by an old friend of Pixel's. On top of providing an insight into Pixel's coding style, this helped with figuring out one of the most complex parts of Cave Story's codebase.
-
-And... that's it! It's not often that a game this decompilable comes along, so I'm glad that Cave Story was one of them. [Patching a dusty old executable from 2004 has its downsides](https://github.com/Clownacy/Cave-Story-Mod-Loader/blob/master/src/mods/graphics_enhancement/widescreen/patch_camera.c).
+RECSBR is a remake of the Cave Story Beta.
 
 ## Dependencies
 
@@ -86,7 +12,7 @@ If these are not found, they will be built locally.
 
 In addition, `pkg-config` is required for builds that require static-linkage.
 
-A list of dependencies for specific platforms can be found [on the wiki](https://github.com/Clownacy/Cave-Story-Engine-2/wiki/Dependency-lists).
+A list of dependencies for specific platforms could be found [on the CSE2 wiki](https://github.com/Clownacy/Cave-Story-Engine-2/wiki/Dependency-lists).
 
 ## Building
 
@@ -104,7 +30,7 @@ You can also add the following flags:
 
 Name | Function
 --------|--------
-`-DJAPANESE=ON` | Enable the Japanese-language build (instead of the unofficial Aeon Genesis English translation)
+`-DJAPANESE=ON` | Enable the Japanese-language build (instead of the unofficial Aeon Genesis English translation [Also, this beta remake doesn't have Japanese support yet])
 `-DFIX_BUGS=ON` | Enabled by default - Fix various bugs in the game
 `-DDEBUG_SAVE=ON` | Re-enable the ability to drag-and-drop save files onto the window
 `-DBACKEND_RENDERER=OpenGL3` | Render with OpenGL 3.2 (hardware-accelerated)
