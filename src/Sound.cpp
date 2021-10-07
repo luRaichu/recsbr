@@ -271,9 +271,9 @@ BOOL LoadDramObject(const char *file_name, int no)
 	if ((fp = fopen(path.c_str(), "rb")) == NULL)
 		return FALSE;
 
-	fseek(fp, 0, SEEK_END);
+	/*fseek(fp, 0, SEEK_END);
 	file_size = ftell(fp);
-	rewind(fp);
+	rewind(fp);*/
 
 	// Let's not throttle disk I/O, shall we...
 	//for (i = 0; i < 58; i++)
@@ -298,6 +298,7 @@ BOOL LoadDramObject(const char *file_name, int no)
 		return FALSE;
 #endif
 
+	file_size = (check_box[4] << 0) | (check_box[5] << 8) | (check_box[6] << 16) | (check_box[7] << 24);
 	unsigned char *wp;
 	wp = (unsigned char*)malloc(file_size);	// ファイルのワークスペースを作る (Create a file workspace)
 
@@ -319,7 +320,7 @@ BOOL LoadDramObject(const char *file_name, int no)
 	fclose(fp);
 
 	// Get sound properties, and check if it's valid
-	unsigned long buffer_size = wp[0x36] | (wp[0x37] << 8) | (wp[0x38] << 16) | (wp[0x39] << 24);
+	unsigned long buffer_size = file_size - 58;
 	unsigned short format = wp[0x14] | (wp[0x15] << 8);
 	unsigned short channels = wp[0x16] | (wp[0x17] << 8);
 	unsigned long sample_rate = wp[0x18] | (wp[0x19] << 8) | (wp[0x1A] << 16) | (wp[0x1B] << 24);
