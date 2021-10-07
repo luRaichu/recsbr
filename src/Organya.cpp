@@ -99,6 +99,59 @@ typedef struct OrgData
 
 AudioBackend_Sound *lpORGANBUFFER[8][8][2] = {NULL};
 
+const char *dram_name[] = {
+	"data/Dram/Bass01.wav",
+	"data/Dram/Bass02.wav",
+	"data/Dram/Snare01.wav",
+	"data/Dram/Snare02.wav",
+	"data/Dram/Tom01.wav",
+
+	"data/Dram/HiClose.wav",
+	"data/Dram/HiOpen.wav",
+	"data/Dram/Crash.wav",
+	"data/Dram/Per01.wav",
+	"data/Dram/Per02.wav",
+
+	"data/Dram/Bass03.wav",
+	"data/Dram/Tom02.wav",
+	"data/Dram/Bass04.wav", //新規追加
+	"data/Dram/Bass05.wav",
+	"data/Dram/Snare03.wav",
+
+	"data/Dram/Snare04.wav",
+	"data/Dram/HiClose02.wav",
+	"data/Dram/HiOpen02.wav",
+	"data/Dram/HiClose03.wav",
+	"data/Dram/HiOpen03.wav",
+
+	"data/Dram/Crash02.wav",
+	"data/Dram/RevSym01.wav",
+	"data/Dram/Ride01.wav",
+	"data/Dram/Tom03.wav",
+	"data/Dram/Tom04.wav",
+
+	"data/Dram/OrcDrm01.wav",	
+	"data/Dram/Bell.wav",
+	"data/Dram/Cat.wav" ,
+	"data/Dram/Bass06.wav",		//さらに追加
+	"data/Dram/Bass07.wav",
+
+	"data/Dram/Snare05.wav",
+	"data/Dram/Snare06.wav",
+	"data/Dram/Snare07.wav",
+	"data/Dram/Tom05.wav",
+	"data/Dram/HiOpen04.wav",
+
+	"data/Dram/HiClose04.wav",
+	"data/Dram/Clap01.wav",
+	"data/Dram/Pesi01.wav",
+	"data/Dram/Quick01.wav",
+	"data/Dram/Bass08.wav" ,		//懲りずに追加	// 2011.10.17 
+
+	"data/Dram/Snare08.wav",
+	"data/Dram/HiClose05.wav",
+};
+
 /////////////////////////////////////////////
 //■オルガーニャ■■■■■■■■■■■■/////// (Organya)
 /////////////////////
@@ -349,7 +402,7 @@ void ChangeDramFrequency(unsigned char key, signed char track)
 	if (!audio_backend_initialised)
 		return;
 
-	AudioBackend_SetSoundFrequency(lpSECONDARYBUFFER[150 + track], key * 800 + 100);
+	AudioBackend_SetSoundFrequency(lpDRAMBUFFER[track], key * 800 + 100);
 }
 
 void ChangeDramPan(unsigned char pan, signed char track)
@@ -357,7 +410,7 @@ void ChangeDramPan(unsigned char pan, signed char track)
 	if (!audio_backend_initialised)
 		return;
 
-	AudioBackend_SetSoundPan(lpSECONDARYBUFFER[150 + track], (pan_tbl[pan] - 0x100) * 10);
+	AudioBackend_SetSoundPan(lpDRAMBUFFER[track], (pan_tbl[pan] - 0x100) * 10);
 }
 
 void ChangeDramVolume(long volume, signed char track)
@@ -365,7 +418,7 @@ void ChangeDramVolume(long volume, signed char track)
 	if (!audio_backend_initialised)
 		return;
 
-	AudioBackend_SetSoundVolume(lpSECONDARYBUFFER[150 + track], (volume - 0xFF) * 8);
+	AudioBackend_SetSoundVolume(lpDRAMBUFFER[track], (volume - 0xFF) * 8);
 }
 
 // サウンドの再生 (Play sound)
@@ -374,20 +427,20 @@ void PlayDramObject(unsigned char key, int mode, signed char track)
 	if (!audio_backend_initialised)
 		return;
 
-	if (lpSECONDARYBUFFER[150 + track] != NULL)
+	if (lpDRAMBUFFER[track] != NULL)
 	{
 		switch (mode)
 		{
 			case 0:	// 停止 (Stop)
-				AudioBackend_StopSound(lpSECONDARYBUFFER[150 + track]);
-				AudioBackend_RewindSound(lpSECONDARYBUFFER[150 + track]);
+				AudioBackend_StopSound(lpDRAMBUFFER[track]);
+				AudioBackend_RewindSound(lpDRAMBUFFER[track]);
 				break;
 
 			case 1:	// 再生 (Playback)
-				AudioBackend_StopSound(lpSECONDARYBUFFER[150 + track]);
-				AudioBackend_RewindSound(lpSECONDARYBUFFER[150 + track]);
+				AudioBackend_StopSound(lpDRAMBUFFER[track]);
+				AudioBackend_RewindSound(lpDRAMBUFFER[track]);
 				ChangeDramFrequency(key, track);	// 周波数を設定して (Set the frequency)
-				AudioBackend_PlaySound(lpSECONDARYBUFFER[150 + track], FALSE);
+				AudioBackend_PlaySound(lpDRAMBUFFER[track], FALSE);
 				break;
 
 			case 2:	// 歩かせ停止 (Stop playback)
@@ -525,6 +578,8 @@ BOOL OrgData::NoteAlloc(unsigned short alloc)
 
 	for (j = 0; j < MAXMELODY; j++)
 		MakeOrganyaWave(j, info.tdata[j].wave_no, info.tdata[j].pipi);
+	for(j = 0; j < MAXDRAM; j++)
+		LoadDramObject("data/Dram/Bass01.wav",j);
 
 	track = 0;	// 今はここに書いておく (Write here now)
 
@@ -677,7 +732,7 @@ BOOL OrgData::InitMusicData(const char *path)
 	for (j = MAXMELODY; j < MAXTRACK; j++)
 	{
 		i = info.tdata[j].wave_no;
-		//InitDramObject(dram_name[i], j - MAXMELODY);
+		LoadDramObject(dram_name[i], j - MAXMELODY);
 	}
 
 	SetPlayPointer(0);	// 頭出し (Cue)

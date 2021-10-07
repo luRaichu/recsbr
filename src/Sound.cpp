@@ -30,6 +30,7 @@ equivalents.
 
 BOOL audio_backend_initialised;
 AudioBackend_Sound *lpSECONDARYBUFFER[SE_MAX];
+AudioBackend_Sound *lpDRAMBUFFER[8];
 
 // DirectSoundの開始 (Starting DirectSound)
 BOOL InitDirectSound(void)
@@ -254,48 +255,107 @@ void PlaySoundObject(int no, SoundMode mode)
 	}
 #endif
 }
-/*BOOL InitDramObject(const char* resname, int no)
+BOOL LoadDramObject(const char *file_name, int no)
 {
-    HRSRC hrscr;
-    DSBUFFERDESC dsbd;
-    DWORD *lpdword;//リソースのアドレス (Resource address)
-    // リソースの検索 (Search for resources)
-	ReleaseDramObject(no); //ここにおいてみた。(I saw it here.)
+	std::string path;
+	//unsigned long i;
+	unsigned long file_size = 0;
+	char check_box[58];
+	FILE *fp;
 
-    if((hrscr = FindResource(NULL, resname, "WAVE")) == NULL)
+	path = gModulePath + '/' + file_name;
+
+	if (!audio_backend_initialised)
+		return TRUE;
+
+	if ((fp = fopen(path.c_str(), "rb")) == NULL)
+		return FALSE;
+
+	fseek(fp, 0, SEEK_END);
+	file_size = ftell(fp);
+	rewind(fp);
+
+	// Let's not throttle disk I/O, shall we...
+	//for (i = 0; i < 58; i++)
+	//	fread(&check_box[i], sizeof(char), 1, fp);	// Holy hell, this is inefficient
+	fread(check_box, 1, 58, fp);
+
+#ifdef FIX_BUGS
+	// The original code forgets to close 'fp'
+	if (check_box[0] != 'R' || check_box[1] != 'I' || check_box[2] != 'F' || check_box[3] != 'F')
 	{
-        return(FALSE);
+		fclose(fp);
+		return FALSE;
 	}
-    // リソースのアドレスを取得 (Get the address of the resource)
-    lpdword = (DWORD*)LockResource(LoadResource(NULL, hrscr));
-	// 二次バッファの生成 (Generation of secondary buffer)
-	memset(&dsbd, sizeof(DSBUFFERDESC));
-	dsbd.dwSize = sizeof(DSBUFFERDESC);
-	dsbd.dwFlags = 
-		DSBCAPS_STATIC|
-		DSBCAPS_STICKYFOCUS
-		|DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY;
-	dsbd.dwBufferBytes = *(DWORD*)((BYTE*)lpdword+0x36);//WAVEデータのサイズ (Wave data size)
-	dsbd.lpwfxFormat = (LPWAVEFORMATEX)(lpdword+5); 
-	if(lpDS->CreateSoundBuffer(&dsbd, &lpDRAMBUFFER[no],NULL) != DS_OK) return(FALSE);
-    LPVOID lpbuf1, lpbuf2;
-    DWORD dwbuf1, dwbuf2;
-    // 二次バッファのロック (Secondary buffer lock)
-    lpDRAMBUFFER[no]->Lock(0, *(DWORD*)((BYTE*)lpdword+0x36),
-                        &lpbuf1, &dwbuf1, &lpbuf2, &dwbuf2, 0); 
-	// 音源データの設定 (Sound source data settings)
-	CopyMemory(lpbuf1, (BYTE*)lpdword+0x3a, dwbuf1);
-    if(dwbuf2 != 0){
-		CopyMemory(lpbuf2, (BYTE*)lpdword+0x3a+dwbuf1, dwbuf2);
-		
+#else
+	if (check_box[0] != 'R')
+		return FALSE;
+	if (check_box[1] != 'I')
+		return FALSE;
+	if (check_box[2] != 'F')
+		return FALSE;
+	if (check_box[3] != 'F')
+		return FALSE;
+#endif
+
+	unsigned char *wp;
+	wp = (unsigned char*)malloc(file_size);	// ファイルのワークスペースを作る (Create a file workspace)
+
+#ifdef FIX_BUGS
+	if (wp == NULL)
+	{
+		fclose(fp);
+		return FALSE;
+	}
+#endif
+
+	fseek(fp, 0, SEEK_SET);
+
+	// Bloody hell, Pixel, come on...
+	//for (i = 0; i < file_size; i++)
+	//	fread((BYTE*)wp+i, sizeof(char), 1, fp);	// Pixel, stahp
+	fread(wp, 1, file_size, fp);
+
+	fclose(fp);
+
+	// Get sound properties, and check if it's valid
+	unsigned long buffer_size = wp[0x36] | (wp[0x37] << 8) | (wp[0x38] << 16) | (wp[0x39] << 24);
+	unsigned short format = wp[0x14] | (wp[0x15] << 8);
+	unsigned short channels = wp[0x16] | (wp[0x17] << 8);
+	unsigned long sample_rate = wp[0x18] | (wp[0x19] << 8) | (wp[0x1A] << 16) | (wp[0x1B] << 24);
+	unsigned short bits_per_sample = wp[0x22] | (wp[0x23] << 8);
+
+	if (format != 1)	// 1 is WAVE_FORMAT_PCM
+	{
+		free(wp);
+		return FALSE;
 	}
 
-	// 二次バッファのロック解除 (Unlock secondary buffer)
-	lpDRAMBUFFER[no]->Unlock(lpbuf1, dwbuf1, lpbuf2, dwbuf2); 
-	lpDRAMBUFFER[no]->SetCurrentPosition(0);
+	if (channels != 1)	// The mixer only supports mono right now
+	{
+		free(wp);
+		return FALSE;
+	}
 
-    return(TRUE);
-}*/
+	if (bits_per_sample != 8)	// The mixer only supports 8-bit unsigned samples
+	{
+		free(wp);
+		return FALSE;
+	}
+
+	// セカンダリバッファの生成 (Create secondary buffer)
+	lpDRAMBUFFER[no] = AudioBackend_CreateSound(sample_rate, wp + 0x3A, buffer_size);
+
+	if (lpDRAMBUFFER[no] == NULL)
+	{
+		free(wp);
+		return FALSE;	
+	}
+	
+	free(wp);
+
+	return TRUE;
+}
 void ChangeSoundFrequency(int no, unsigned long rate)	// 100がMIN9999がMAXで2195?がﾉｰﾏﾙ (100 is MIN, 9999 is MAX, and 2195 is normal)
 {
 	if (!audio_backend_initialised)

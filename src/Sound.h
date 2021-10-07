@@ -35,11 +35,13 @@ enum SoundMode
 
 extern BOOL audio_backend_initialised;
 extern AudioBackend_Sound *lpSECONDARYBUFFER[SE_MAX];
+extern AudioBackend_Sound *lpDRAMBUFFER[8];
 
 BOOL InitDirectSound(void);
 void EndDirectSound(void);
 BOOL InitSoundObject(const char *resname, int no);
 BOOL LoadSoundObject(const char *file_name, int no);
+BOOL LoadDramObject(const char *file_name, int no);
 void PlaySoundObject(int no, SoundMode mode);
 void ChangeSoundFrequency(int no, unsigned long rate);
 void ChangeSoundVolume(int no, long volume);
