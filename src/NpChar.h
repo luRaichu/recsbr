@@ -80,6 +80,7 @@ typedef struct NPCHAR
 	int ani_no;
 	int count1;
 	int count2;
+	int count3;
 	int act_no;
 	int act_wait;
 	OTHER_RECT hit;

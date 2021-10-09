@@ -269,7 +269,7 @@ void PutArmsEnergy(BOOL flash)
 	if (gArmsData[gSelectedArms].max_num)
 	{
 
-		PutNumber4(40, 24, gArmsData[gSelectedArms].num, FALSE);
+		PutNumber4(32, 24, gArmsData[gSelectedArms].num, FALSE);
 		//PutNumber4(gArmsEnergyX + 32, 24, gArmsData[gSelectedArms].max_num, FALSE);
 	}
 	else

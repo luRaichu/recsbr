@@ -79,7 +79,7 @@ static const struct
 	{53, "Wav/enemy.ogg", SOUND_TYPE_OTHER},//small enemy hurt
 	{54, "Wav/enemy.ogg", SOUND_TYPE_OTHER},//"cool" enemy hurt
 	{55, "PixTone/055.pxt", SOUND_TYPE_PIXTONE},//another enemy squeak
-	{56, "PixTone/056.pxt", SOUND_TYPE_PIXTONE},//watersplash
+	//{56, "PixTone/056.pxt", SOUND_TYPE_PIXTONE},//watersplash
 	{57, "PixTone/057.pxt", SOUND_TYPE_PIXTONE},//weird and fast enemy hurt sfct
 	{58, "PixTone/058.pxt", SOUND_TYPE_PIXTONE},//short noise???
 	{59, "PixTone/059.pxt", SOUND_TYPE_PIXTONE},//spur charge 1

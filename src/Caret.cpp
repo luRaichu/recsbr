@@ -627,7 +627,7 @@ void ActCaret19(CARET* crt)
 	crt->rect = rect[crt->ani_no];
 }
 
-void ActCaret20(CARET* crt)
+void ActCaret20(CARET* crt) // Splash caret
 {
 	RECT rect[4] = {
 		{0, 65, 8,72},
@@ -636,8 +636,6 @@ void ActCaret20(CARET* crt)
 		{24, 65, 32, 72},
 
 	};
-	
-
 	//crt->ym += 0x20;
 	//crt->ani_no = Random(0, 4);
 	crt->rect = rect[crt->ani_no];
@@ -646,9 +644,9 @@ void ActCaret20(CARET* crt)
 		crt->ani_wait = 0; // Reset counter
 		++crt->ani_no; // Increase animation frame by one
 	}
-	if (crt->ani_no > 5)
+	if (crt->ani_no > 3)
 	{
-		crt->ani_no = 5;
+		crt->ani_no = 3;
 		crt->cond = 0;
 	}
 
