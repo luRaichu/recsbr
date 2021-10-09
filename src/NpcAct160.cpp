@@ -78,7 +78,7 @@ void ActNpc160(NPCHAR *npc)
 			{
 				npc->act_no = 4;
 				npc->count1 = 0;
-				npc->count2 = 0;
+				//npc->count2 = 0;
 			}
 
 			break;
@@ -87,17 +87,17 @@ void ActNpc160(NPCHAR *npc)
 			gSuperXpos = npc->x;
 			gSuperYpos = npc->y;
 
-			if (npc->shock % 2 == 1)
+			if (npc->count2 > 666)
 			{
 				SetNpChar(161, npc->x + (Random(-12, 12) * 0x200), npc->y + (Random(-12, 12) * 0x200), Random(-0x600, 0x600), Random(-0x600, 0x600), 0, NULL, 0x100);
 
-				if (++npc->count1 > 30)
+				/*if (++npc->count1 > 30)
 				{
 					npc->count1 = 0;
 					npc->act_no = 5;
 					npc->ym = -0xC00;
 					npc->bits |= NPC_IGNORE_SOLIDITY;
-				}
+				}*/
 			}
 
 			break;
@@ -173,11 +173,23 @@ void ActNpc160(NPCHAR *npc)
 		{80, 24, 120, 48},
 		{120, 24, 160, 48},
 	};
+	RECT rect_no[1] = {
+		{0, 0, 0, 0}
+	};
+
+	npc->count2++;
 
 	if (npc->direct == 0)
 		npc->rect = rect_left[npc->ani_no];
 	else
 		npc->rect = rect_right[npc->ani_no];
+
+	if (npc->count2 > 678)
+	{
+		npc->rect = rect_no[0];
+		npc->x = gMC.x;
+		npc->y = gMC.y;
+	}
 }
 
 // Puu Black projectile
