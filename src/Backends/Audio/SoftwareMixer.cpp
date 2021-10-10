@@ -1,3 +1,6 @@
+// Released under the MIT licence.
+// See LICENCE.txt for details.
+
 #include "SoftwareMixer.h"
 
 #include <math.h>
@@ -10,13 +13,15 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define CLAMP(x, y, z) MIN(MAX((x), (y)), (z))
 
+#define LANCZOS_KERNEL_RADIUS 2
+
 struct Mixer_Sound
 {
 	signed char *samples;
 	size_t frames;
 	size_t position;
-	unsigned long sample_offset_remainder;  // 16.16 fixed-point
-	unsigned long advance_delta;            // 16.16 fixed-point
+	unsigned short position_subsample;
+	unsigned long advance_delta; // 16.16 fixed-point
 	bool playing;
 	bool looping;
 	short volume;    // 8.8 fixed-point
@@ -36,7 +41,7 @@ static unsigned short MillibelToScale(long volume)
 {
 	// Volume is in hundredths of a decibel, from 0 to -10000
 	volume = CLAMP(volume, -10000, 0);
-	return (unsigned short)(pow(10.0, volume / 2000.0) * 256.0f);
+	return (unsigned short)(pow(10.0, volume / 2000.0) * 256.0);
 }
 
 void Mixer_Init(unsigned long frequency)
@@ -51,7 +56,8 @@ Mixer_Sound* Mixer_CreateSound(unsigned int frequency, const unsigned char *samp
 	if (sound == NULL)
 		return NULL;
 
-	sound->samples = (signed char*)malloc(length + 1);
+	// Both interpolators will read outside the array's bounds, so allocate some extra room
+	sound->samples = (signed char*)malloc(LANCZOS_KERNEL_RADIUS - 1 + length + LANCZOS_KERNEL_RADIUS);
 
 	if (sound->samples == NULL)
 	{
@@ -59,13 +65,15 @@ Mixer_Sound* Mixer_CreateSound(unsigned int frequency, const unsigned char *samp
 		return NULL;
 	}
 
+	sound->samples += LANCZOS_KERNEL_RADIUS - 1;
+
 	for (size_t i = 0; i < length; ++i)
 		sound->samples[i] = samples[i] - 0x80;	// Convert from unsigned 8-bit PCM to signed
 
 	sound->frames = length;
 	sound->playing = false;
 	sound->position = 0;
-	sound->sample_offset_remainder = 0;
+	sound->position_subsample = 0;
 
 	Mixer_SetSoundFrequency(sound, frequency);
 	Mixer_SetSoundVolume(sound, 0);
@@ -84,6 +92,7 @@ void Mixer_DestroySound(Mixer_Sound *sound)
 		if (*sound_pointer == sound)
 		{
 			*sound_pointer = sound->next;
+			sound->samples -= LANCZOS_KERNEL_RADIUS - 1;
 			free(sound->samples);
 			free(sound);
 			break;
@@ -96,7 +105,24 @@ void Mixer_PlaySound(Mixer_Sound *sound, bool looping)
 	sound->playing = true;
 	sound->looping = looping;
 
-	sound->samples[sound->frames] = looping ? sound->samples[0] : 0;	// For the linear interpolator
+	// Fill the out-of-bounds part of the buffer with
+	// either blank samples or repeated samples
+	if (looping)
+	{
+		for (int i = -LANCZOS_KERNEL_RADIUS + 1; i < 0; ++i)
+			sound->samples[i] = sound->samples[sound->frames + i];
+
+		for (int i = 0; i < LANCZOS_KERNEL_RADIUS; ++i)
+			sound->samples[sound->frames + i] = sound->samples[i];
+	}
+	else
+	{
+		for (int i = -LANCZOS_KERNEL_RADIUS + 1; i < 0; ++i)
+			sound->samples[i] = 0;
+
+		for (int i = 0; i < LANCZOS_KERNEL_RADIUS; ++i)
+			sound->samples[sound->frames + i] = 0;
+	}
 }
 
 void Mixer_StopSound(Mixer_Sound *sound)
@@ -107,7 +133,7 @@ void Mixer_StopSound(Mixer_Sound *sound)
 void Mixer_RewindSound(Mixer_Sound *sound)
 {
 	sound->position = 0;
-	sound->sample_offset_remainder = 0;
+	sound->position_subsample = 0;
 }
 
 void Mixer_SetSoundFrequency(Mixer_Sound *sound, unsigned int frequency)
@@ -143,20 +169,36 @@ ATTRIBUTE_HOT void Mixer_MixSounds(long *stream, size_t frames_total)
 
 			for (size_t frames_done = 0; frames_done < frames_total; ++frames_done)
 			{
-				// Perform linear interpolation
-				const unsigned char subsample = sound->sample_offset_remainder >> 8;
+				// Perform Lanczos resampling
+				float output_sample = 0;
 
-				const short interpolated_sample = sound->samples[sound->position] * (0x100 - subsample)
-				                                      + sound->samples[sound->position + 1] * subsample;
+				for (int i = -LANCZOS_KERNEL_RADIUS + 1; i <= LANCZOS_KERNEL_RADIUS; ++i)
+				{
+					const signed char input_sample = sound->samples[sound->position + i];
+
+					const float kernel_input = ((float)sound->position_subsample / 0x10000) - i;
+
+					if (kernel_input == 0.0f)
+					{
+						output_sample += input_sample;
+					}
+					else
+					{
+						const float nx = 3.14159265358979323846f * kernel_input;
+						const float nxa = nx / LANCZOS_KERNEL_RADIUS;
+
+						output_sample += input_sample * (sin(nx) * sin(nxa) / (nx * nxa));
+					}
+				}
 
 				// Mix, and apply volume
-				*stream_pointer++ += (interpolated_sample * sound->volume_l) >> 8;
-				*stream_pointer++ += (interpolated_sample * sound->volume_r) >> 8;
+				*stream_pointer++ += (short)(output_sample * sound->volume_l);
+				*stream_pointer++ += (short)(output_sample * sound->volume_r);
 
 				// Increment sample
-				sound->sample_offset_remainder += sound->advance_delta;
-				sound->position += sound->sample_offset_remainder >> 16;
-				sound->sample_offset_remainder &= 0xFFFF;
+				const unsigned long next_position_subsample = sound->position_subsample + sound->advance_delta;
+				sound->position += next_position_subsample >> 16;
+				sound->position_subsample = next_position_subsample & 0xFFFF;
 
 				// Stop or loop sample once it's reached its end
 				if (sound->position >= sound->frames)
@@ -169,7 +211,7 @@ ATTRIBUTE_HOT void Mixer_MixSounds(long *stream, size_t frames_total)
 					{
 						sound->playing = false;
 						sound->position = 0;
-						sound->sample_offset_remainder = 0;
+						sound->position_subsample = 0;
 						break;
 					}
 				}
