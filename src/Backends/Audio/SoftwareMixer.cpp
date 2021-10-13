@@ -14,6 +14,7 @@
 #define CLAMP(x, y, z) MIN(MAX((x), (y)), (z))
 
 #define LANCZOS_KERNEL_RADIUS 2
+#define LANCZOS_RESAMPLER
 
 struct Mixer_Sound
 {
@@ -57,7 +58,11 @@ Mixer_Sound* Mixer_CreateSound(unsigned int frequency, const unsigned char *samp
 		return NULL;
 
 	// Both interpolators will read outside the array's bounds, so allocate some extra room
+#ifdef LANCZOS_RESAMPLER
 	sound->samples = (signed char*)malloc(LANCZOS_KERNEL_RADIUS - 1 + length + LANCZOS_KERNEL_RADIUS);
+#else
+	sound->samples = (signed char*)malloc(length + 1);
+#endif
 
 	if (sound->samples == NULL)
 	{
@@ -65,7 +70,9 @@ Mixer_Sound* Mixer_CreateSound(unsigned int frequency, const unsigned char *samp
 		return NULL;
 	}
 
+#ifdef LANCZOS_RESAMPLER
 	sound->samples += LANCZOS_KERNEL_RADIUS - 1;
+#endif
 
 	for (size_t i = 0; i < length; ++i)
 		sound->samples[i] = samples[i] - 0x80;	// Convert from unsigned 8-bit PCM to signed
@@ -92,7 +99,9 @@ void Mixer_DestroySound(Mixer_Sound *sound)
 		if (*sound_pointer == sound)
 		{
 			*sound_pointer = sound->next;
+		#ifdef LANCZOS_RESAMPLER
 			sound->samples -= LANCZOS_KERNEL_RADIUS - 1;
+		#endif
 			free(sound->samples);
 			free(sound);
 			break;
@@ -107,6 +116,7 @@ void Mixer_PlaySound(Mixer_Sound *sound, bool looping)
 
 	// Fill the out-of-bounds part of the buffer with
 	// either blank samples or repeated samples
+#ifdef LANCZOS_RESAMPLER
 	if (looping)
 	{
 		for (int i = -LANCZOS_KERNEL_RADIUS + 1; i < 0; ++i)
@@ -123,6 +133,9 @@ void Mixer_PlaySound(Mixer_Sound *sound, bool looping)
 		for (int i = 0; i < LANCZOS_KERNEL_RADIUS; ++i)
 			sound->samples[sound->frames + i] = 0;
 	}
+#else
+	sound->samples[sound->frames] = looping ? sound->samples[0] : 0;
+#endif
 }
 
 void Mixer_StopSound(Mixer_Sound *sound)
@@ -169,6 +182,7 @@ ATTRIBUTE_HOT void Mixer_MixSounds(long *stream, size_t frames_total)
 
 			for (size_t frames_done = 0; frames_done < frames_total; ++frames_done)
 			{
+			#ifdef LANCZOS_RESAMPLER
 				// Perform Lanczos resampling
 				float output_sample = 0;
 
@@ -194,6 +208,17 @@ ATTRIBUTE_HOT void Mixer_MixSounds(long *stream, size_t frames_total)
 				// Mix, and apply volume
 				*stream_pointer++ += (short)(output_sample * sound->volume_l);
 				*stream_pointer++ += (short)(output_sample * sound->volume_r);
+			#else
+				// Perform linear interpolation
+				const unsigned char interpolation_scale = sound->position_subsample >> 8;
+
+				const signed char output_sample = (sound->samples[sound->position] * (0x100 - interpolation_scale)
+				                                 + sound->samples[sound->position + 1] * interpolation_scale) >> 8;
+
+				// Mix, and apply volume
+				*stream_pointer++ += output_sample * sound->volume_l;
+				*stream_pointer++ += output_sample * sound->volume_r;
+			#endif
 
 				// Increment sample
 				const unsigned long next_position_subsample = sound->position_subsample + sound->advance_delta;

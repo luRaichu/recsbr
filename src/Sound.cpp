@@ -120,7 +120,38 @@ BOOL InitSoundObject(const char *file_name, int no)
 	return TRUE;
 }
 
-BOOL LoadSoundObject(const char *file_name, int no)
+void PlaySoundObject(int no, SoundMode mode)
+{
+	if (!audio_backend_initialised)
+		return;
+
+	if (lpSECONDARYBUFFER[no] != NULL)
+	{
+		switch (mode)
+		{
+			case SOUND_MODE_STOP:	// 停止 (Stop)
+				AudioBackend_StopSound(lpSECONDARYBUFFER[no]);
+				break;
+
+			case SOUND_MODE_PLAY:	// 再生 (Playback)
+				AudioBackend_StopSound(lpSECONDARYBUFFER[no]);
+				AudioBackend_RewindSound(lpSECONDARYBUFFER[no]);
+				AudioBackend_PlaySound(lpSECONDARYBUFFER[no], FALSE);
+				break;
+
+			case SOUND_MODE_PLAY_LOOP:// ループ再生 (Loop playback)
+				AudioBackend_PlaySound(lpSECONDARYBUFFER[no], TRUE);
+				break;
+		}
+	}
+#ifdef EXTRA_SOUND_FORMATS
+	else
+	{
+		ExtraSound_PlaySFX(no, mode);
+	}
+#endif
+}
+BOOL LoadDramObject(const char *file_name, int no)
 {
 	std::string path;
 	//unsigned long i;
@@ -209,9 +240,9 @@ BOOL LoadSoundObject(const char *file_name, int no)
 	}
 
 	// セカンダリバッファの生成 (Create secondary buffer)
-	lpSECONDARYBUFFER[no] = AudioBackend_CreateSound(sample_rate, wp + 0x3A, buffer_size);
+	lpDRAMBUFFER[no] = AudioBackend_CreateSound(sample_rate, wp + 0x3A, buffer_size);
 
-	if (lpSECONDARYBUFFER[no] == NULL)
+	if (lpDRAMBUFFER[no] == NULL)
 	{
 #ifdef FIX_BUGS
 		free(wp);	// The updated Organya source code includes this fix
@@ -223,39 +254,7 @@ BOOL LoadSoundObject(const char *file_name, int no)
 
 	return TRUE;
 }
-
-void PlaySoundObject(int no, SoundMode mode)
-{
-	if (!audio_backend_initialised)
-		return;
-
-	if (lpSECONDARYBUFFER[no] != NULL)
-	{
-		switch (mode)
-		{
-			case SOUND_MODE_STOP:	// 停止 (Stop)
-				AudioBackend_StopSound(lpSECONDARYBUFFER[no]);
-				break;
-
-			case SOUND_MODE_PLAY:	// 再生 (Playback)
-				AudioBackend_StopSound(lpSECONDARYBUFFER[no]);
-				AudioBackend_RewindSound(lpSECONDARYBUFFER[no]);
-				AudioBackend_PlaySound(lpSECONDARYBUFFER[no], FALSE);
-				break;
-
-			case SOUND_MODE_PLAY_LOOP:// ループ再生 (Loop playback)
-				AudioBackend_PlaySound(lpSECONDARYBUFFER[no], TRUE);
-				break;
-		}
-	}
-#ifdef EXTRA_SOUND_FORMATS
-	else
-	{
-		ExtraSound_PlaySFX(no, mode);
-	}
-#endif
-}
-BOOL LoadDramObject(const char *file_name, int no)
+BOOL LoadSoundObject(const char *file_name, int no)
 {
 	std::string path;
 	//unsigned long i;
@@ -271,9 +270,9 @@ BOOL LoadDramObject(const char *file_name, int no)
 	if ((fp = fopen(path.c_str(), "rb")) == NULL)
 		return FALSE;
 
-	/*fseek(fp, 0, SEEK_END);
+	fseek(fp, 0, SEEK_END);
 	file_size = ftell(fp);
-	rewind(fp);*/
+	rewind(fp);
 
 	// Let's not throttle disk I/O, shall we...
 	//for (i = 0; i < 58; i++)
@@ -298,17 +297,14 @@ BOOL LoadDramObject(const char *file_name, int no)
 		return FALSE;
 #endif
 
-	file_size = (check_box[4] << 0) | (check_box[5] << 8) | (check_box[6] << 16) | (check_box[7] << 24);
 	unsigned char *wp;
 	wp = (unsigned char*)malloc(file_size);	// ファイルのワークスペースを作る (Create a file workspace)
 
-#ifdef FIX_BUGS
 	if (wp == NULL)
 	{
 		fclose(fp);
 		return FALSE;
 	}
-#endif
 
 	fseek(fp, 0, SEEK_SET);
 
@@ -320,7 +316,7 @@ BOOL LoadDramObject(const char *file_name, int no)
 	fclose(fp);
 
 	// Get sound properties, and check if it's valid
-	unsigned long buffer_size = file_size - 58;
+	unsigned long buffer_size = wp[0x36] | (wp[0x37] << 8) | (wp[0x38] << 16) | (wp[0x39] << 24);
 	unsigned short format = wp[0x14] | (wp[0x15] << 8);
 	unsigned short channels = wp[0x16] | (wp[0x17] << 8);
 	unsigned long sample_rate = wp[0x18] | (wp[0x19] << 8) | (wp[0x1A] << 16) | (wp[0x1B] << 24);
@@ -345,11 +341,11 @@ BOOL LoadDramObject(const char *file_name, int no)
 	}
 
 	// セカンダリバッファの生成 (Create secondary buffer)
-	lpDRAMBUFFER[no] = AudioBackend_CreateSound(sample_rate, wp + 0x3A, buffer_size);
+	lpSECONDARYBUFFER[no] = AudioBackend_CreateSound(sample_rate, wp + 0x3A, buffer_size);
 
-	if (lpDRAMBUFFER[no] == NULL)
+	if (lpSECONDARYBUFFER[no] == NULL)
 	{
-		free(wp);
+		free(wp);	// The updated Organya source code includes this fix
 		return FALSE;	
 	}
 	
