@@ -324,17 +324,17 @@ void PutArmsEnergy(BOOL flash)
 	if (gMC.exp_wait && ((add_flash++ / 2) % 2))
 		PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX + 24), PixelToScreenCoord(32), &rcExpFlash, SURFACE_ID_TEXT_BOX);
 }
-
 void PutMyLife(BOOL flash)
 {
-	int e = 128;
+	static unsigned int add_flash;
+
 	RECT rcLife[2] = {
 		{0, 151, 7, 158},
 		{0, 144, 7, 151},
 	};
-	if (flash == TRUE && (gMC.shock / 2) % 2)
+	if (flash == TRUE && (gMC.shock / 2) % 2 && gMC.life != 1)
 		return;
-	if (flash == TRUE && (e / 2) % 2 && gMC.life == 1)
+	if (flash == TRUE && gMC.life == 1 && ((add_flash++ / 2) % 2))
 		return;
 	for (int i = 0; i < gMC.max_life - 1; i++) // For every 1 in max life, add 1 to i, and run the following code
 	{
@@ -347,9 +347,6 @@ void PutMyLife(BOOL flash)
 			& rcLife[gMC.life - 1 > i], // Which rect to use, 'gMC.life - 1 > i' checks if  the current heart that is being drawn is full or not, returns 0 if it's not and 1 if it is
 			SURFACE_ID_TEXT_BOX); // Surface
 	}
-
-
-
 }
 
 void PutCion()
