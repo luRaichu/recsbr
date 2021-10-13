@@ -13,7 +13,7 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define CLAMP(x, y, z) MIN(MAX((x), (y)), (z))
 
-#define LANCZOS_KERNEL_RADIUS 2
+#define LANCZOS_KERNEL_RADIUS 10
 #define LANCZOS_RESAMPLER
 
 struct Mixer_Sound
