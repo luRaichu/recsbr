@@ -13,7 +13,7 @@
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 #define CLAMP(x, y, z) MIN(MAX((x), (y)), (z))
 
-#define LANCZOS_KERNEL_RADIUS 10 // Changing this will change how "smooth" the audio is. Higher values = more Windows XP
+#define LANCZOS_KERNEL_RADIUS 8 // Changing this will change how "smooth" the audio is. Higher values = more Windows XP
 #define LANCZOS_RESAMPLER
 
 struct Mixer_Sound

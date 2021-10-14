@@ -261,16 +261,13 @@ void PutArmsEnergy(BOOL flash)
 	static unsigned char add_flash;
 
 	RECT rcPer = { 72, 48, 80, 56 };
-	RECT rcLv = { 80, 80, 96, 88 };
 	RECT rcView = { 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT };
 	RECT rcNone = { 80, 48, 96, 56 };
 
 	// Draw max ammo
 	if (gArmsData[gSelectedArms].max_num)
 	{
-
 		PutNumber4(32, 24, gArmsData[gSelectedArms].num, FALSE);
-		//PutNumber4(gArmsEnergyX + 32, 24, gArmsData[gSelectedArms].max_num, FALSE);
 	}
 	else
 	{
@@ -282,15 +279,6 @@ void PutArmsEnergy(BOOL flash)
 	if (flash == TRUE && (gMC.shock / 2) % 2)
 		return;
 
-	//PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX + 32), PixelToScreenCoord(24), &rcPer, SURFACE_ID_TEXT_BOX);
-	//PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX), PixelToScreenCoord(32), &rcLv, SURFACE_ID_TEXT_BOX);
-	//PutNumber4(gArmsEnergyX - 8, 32, gArmsData[gSelectedArms].level, FALSE);
-
-	RECT rcExpBox = { 0, 0, 0, 0 }; //RECT rcExpBox = { 0, 72, 40, 80 };
-	RECT rcExpVal = { 0, 0, 0, 0 };  //	RECT rcExpVal = {0, 80, 0, 88};
-	RECT rcExpMax = { 0, 0, 0, 0 };//RECT rcExpMax = {40, 72, 80, 80};
-	RECT rcExpFlash = { 0, 0, 0, 0 };//RECT rcExpFlash = {40, 80, 80, 88};
-
 	int lv = gArmsData[gSelectedArms].level - 1;
 
 #ifdef FIX_BUGS
@@ -300,29 +288,6 @@ void PutArmsEnergy(BOOL flash)
 	if (lv < 0)
 		lv = 0;
 #endif
-
-	int arms_code = gArmsData[gSelectedArms].code;
-	int exp_now = gArmsData[gSelectedArms].exp;
-	int exp_next = gArmsLevelTable[arms_code].exp[lv];
-
-	PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX + 24), PixelToScreenCoord(32), &rcExpBox, SURFACE_ID_TEXT_BOX);
-
-	if (lv == 2 && gArmsData[gSelectedArms].exp == gArmsLevelTable[arms_code].exp[lv])
-	{
-		PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX + 24), PixelToScreenCoord(32), &rcExpMax, SURFACE_ID_TEXT_BOX);
-	}
-	else
-	{
-		if (exp_next != 0)
-			rcExpVal.right += (exp_now * 40) / exp_next;
-		else
-			rcExpVal.right = 0;
-
-		PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX + 24), PixelToScreenCoord(32), &rcExpVal, SURFACE_ID_TEXT_BOX);
-	}
-
-	if (gMC.exp_wait && ((add_flash++ / 2) % 2))
-		PutBitmap3(&rcView, PixelToScreenCoord(gArmsEnergyX + 24), PixelToScreenCoord(32), &rcExpFlash, SURFACE_ID_TEXT_BOX);
 }
 void PutMyLife(BOOL flash)
 {
