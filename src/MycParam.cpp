@@ -92,9 +92,18 @@ void AddExpMyChar(int x)
 				}
 			}
 		}
+		if (gArmsData[gSelectedArms].code != 13)
+		{
+			gMC.exp_count += x;
+			gMC.exp_wait = 30;
+		}
+		else
+		{
+			gMC.exp_wait = 10;
+			gArmsData[gSelectedArms].level = 1;
+			gArmsData[gSelectedArms].exp = 0;
+		}
 	}
-		gArmsData[gSelectedArms].level = 1;
-		gArmsData[gSelectedArms].exp = 0;
 }
 
 void ZeroExpMyChar(void)

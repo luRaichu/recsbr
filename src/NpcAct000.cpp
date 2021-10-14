@@ -190,13 +190,13 @@ void ActNpc001(NPCHAR *npc)
 		//cout << npc->exp;
 		switch (npc->exp) //SetCaret(gMC.x, gMC.y, 21, 0);
 		{
-			case 3:
+			case 5:
 				npc->rect.top += 16;
 				npc->rect.bottom += 16;
 				//printf("me when 3 cion drop");
 				break;
 
-			case 8:
+			case 20:
 				npc->rect.top += 32;
 				npc->rect.bottom += 32;
 				//printf("me when 8 cion drops");
