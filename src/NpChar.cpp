@@ -210,15 +210,15 @@ void SetExpObjects(int x, int y, int exp)
 
 		memset(&gNPC[n], 0, sizeof(NPCHAR));
 
-		if (exp >= 20)
+		if (exp >= 8)
 		{
-			exp -= 20;
-			sub_exp = 20;
+			exp -= 8;
+			sub_exp = 8;
 		}
-		else if (exp >= 5)
+		else if (exp >= 3)
 		{
-			exp -= 5;
-			sub_exp = 5;
+			exp -= 3;
+			sub_exp = 3;
 		}
 		else if (exp >= 1)
 		{

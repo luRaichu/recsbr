@@ -58,7 +58,7 @@ void SetDestroyMyChar(int x, int y, int w, int num)
 }
 void AddExpMyChar(int x)
 {
-	int lv = gArmsData[gSelectedArms].level - 1;
+	/*int lv = gArmsData[gSelectedArms].level - 1;
 	int arms_code = gArmsData[gSelectedArms].code;
 
 	gArmsData[gSelectedArms].exp += x;
@@ -103,7 +103,8 @@ void AddExpMyChar(int x)
 			gArmsData[gSelectedArms].level = 1;
 			gArmsData[gSelectedArms].exp = 0;
 		}
-	}
+	}*/
+	cion += x;
 }
 
 void ZeroExpMyChar(void)
