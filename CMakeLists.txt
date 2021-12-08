@@ -27,6 +27,7 @@ option(MSVC_LINK_STATIC_RUNTIME "Link the static MSVC runtime library (Visual St
 
 option(FORCE_LOCAL_LIBS "Compile the built-in versions of SDL2, GLFW3, and FreeType instead of using the system-provided ones" OFF)
 
+option(DEVTERM "Enable support for the ClockworkPi DevTerm" OFF)
 
 #########
 # Setup #
@@ -227,6 +228,13 @@ if(MSVC AND MSVC_LINK_STATIC_RUNTIME)
 	endforeach()
 endif()
 
+if(DEVTERM)
+	set(BACKEND_RENDERER "OpenGLES2")
+	set(BACKEND_AUDIO "miniaudio")
+	set(BACKEND_PLATFORM "GLFW3")
+	target_compile_definitions(CSE2 PRIVATE DEVTERM)
+endif()
+
 if(BACKEND_RENDERER MATCHES "OpenGL3")
 	target_sources(CSE2 PRIVATE "src/Backends/Rendering/OpenGL3.cpp")
 elseif(BACKEND_RENDERER MATCHES "OpenGLES2")
@@ -364,23 +372,6 @@ if(MSVC)
 endif()
 
 # On Windows, we use native icons instead
-
-    set(RESOURCES
-       "WAVE/BASS01.wav"
-       "WAVE/BASS02.wav"
-       "WAVE/BASS03.wav"
-       "WAVE/CRASH.wav"
-       "WAVE/HICLOSE.wav"
-       "WAVE/HIOPEN.wav"
-       "WAVE/PER01.wav"
-       "WAVE/PER02.wav"
-       "WAVE/SNARE01.wav"
-       "WAVE/SNARE02.wav"
-       "WAVE/TOM01.wav"
-       "WAVE/TOM02.wav"
-
-)
-
 if(NOT WIN32)
     list(APPEND RESOURCES "ICON/ICON_MINI.png")
 endif()
@@ -403,7 +394,6 @@ set_target_properties(CSE2 PROPERTIES
 	CXX_STANDARD_REQUIRED ON
 	CXX_EXTENSIONS OFF
 )
-
 # Name debug builds "CSE2_debug", to distinguish them
 set_target_properties(CSE2 PROPERTIES DEBUG_OUTPUT_NAME "CSE2_debug")
 

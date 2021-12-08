@@ -56,6 +56,7 @@ Name | Function
 `-DCLOWNAUDIO_DR_FLAC=ON` | Enable support for FLAC music/SFX
 `-DCLOWNAUDIO_LIBXMPLITE=ON` | Enable support for .it, .xm, .mod, .s3m music/SFX
 `-DCLOWNAUDIO_PXTONE=ON` | Enable support for PxTone music/SFX (not to be confused with PixTone)
+`-DDEVTERM=ON` | Enable support for the ClockworkPi DevTerm
 
 You can pass your own compiler flags with `-DCMAKE_C_FLAGS` and `-DCMAKE_CXX_FLAGS`.
 
