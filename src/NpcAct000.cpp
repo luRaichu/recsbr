@@ -1540,15 +1540,8 @@ void ActNpc015(NPCHAR *npc)
 // Save point
 void ActNpc016(NPCHAR *npc)
 {
-	RECT rect[8] = {
+	RECT rect[1] = {
 		{96, 16, 112, 32},
-		{112, 16, 128, 32},
-		{128, 16, 144, 32},
-		{144, 16, 160, 32},
-		{160, 16, 176, 32},
-		{176, 16, 192, 32},
-		{192, 16, 208, 32},
-		{208, 16, 224, 32},
 	};
 
 	int i;
@@ -1576,96 +1569,32 @@ void ActNpc016(NPCHAR *npc)
 			break;
 	}
 
-	if (++npc->ani_wait > 2)
-	{
-		npc->ani_wait = 0;
-		++npc->ani_no;
-	}
-
-	if (npc->ani_no > 7)
-		npc->ani_no = 0;
-
 	npc->ym += 0x40;
 	if (npc->ym > 0x5FF)
 		npc->ym = 0x5FF;
 
 	npc->y += npc->ym;
 
-	npc->rect = rect[npc->ani_no];
+	npc->rect = rect[0];
 }
 
 // Health refill
 void ActNpc017(NPCHAR *npc)
 {
-	RECT rect[2] = {
+	RECT rect[1] = {
 		{288, 0, 304, 16},
-		{304, 0, 320, 16},
 	};
 
-	int a;
+	npc->rect = rect[0];
 
 	switch (npc->act_no)
 	{
 		case 0:
+			SetNpChar(57, npc->x, npc->y, 0, 0, 0, NULL, 0x100);
 			npc->act_no = 1;
-
-			if (npc->direct == 2)
-			{
-				npc->ym = -0x200;
-
-				for (a = 0; a < 4; ++a)
-					SetNpChar(4, npc->x + (Random(-12, 12) * 0x200), npc->y + (Random(-12, 12) * 0x200), Random(-341, 341), Random(-0x600, 0), 0, NULL, 0x100);
-			}
-
-			// Fallthrough
 		case 1:
-			a = Random(0, 30);
-
-			if (a < 10)
-				npc->act_no = 2;
-			else if (a < 25)
-				npc->act_no = 3;
-			else
-				npc->act_no = 4;
-
-			npc->act_wait = Random(0x10, 0x40);
-			npc->ani_wait = 0;
-			break;
-
-		case 2:
-			npc->rect = rect[0];
-
-			if (--npc->act_wait == 0)
-				npc->act_no = 1;
-
-			break;
-
-		case 3:
-			if (++npc->ani_wait % 2)
-				npc->rect = rect[0];
-			else
-				npc->rect = rect[1];
-
-			if (--npc->act_wait == 0)
-				npc->act_no = 1;
-
-			break;
-
-		case 4:
-			npc->rect = rect[1];
-
-			if (--npc->act_wait == 0)
-				npc->act_no = 1;
-
 			break;
 	}
-
-	npc->ym += 0x40;
-
-	if (npc->ym > 0x5FF)
-		npc->ym = 0x5FF;
-
-	npc->y += npc->ym;
 }
 
 // Door

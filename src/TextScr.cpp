@@ -9,6 +9,7 @@
 
 #include "WindowsWrapper.h"
 
+
 #include "Backends/Misc.h"
 #include "ArmsItem.h"
 #include "Boss.h"
@@ -577,14 +578,9 @@ void PutTextScript(void)
 
 	if (gTS.mode == 6)
 	{
-		if (gTS.wait < 2)
-			i = (WINDOW_HEIGHT - 96) + (2 - gTS.wait) * 4;
-		else
-			i = WINDOW_HEIGHT - 96;
-
-		PutBitmap3(&grcFull, PixelToScreenCoord((WINDOW_WIDTH / 2) + 56), PixelToScreenCoord(i), &rect_yesno, SURFACE_ID_TEXT_BOX);
+		PutBitmap3(&grcFull, PixelToScreenCoord((WINDOW_WIDTH / 2) + 30), PixelToScreenCoord(WINDOW_HEIGHT - 104), &rect_yesno, SURFACE_ID_TEXT_BOX);
 		if (gTS.wait == 16)
-			PutBitmap3(&grcFull, PixelToScreenCoord((gTS.select * 41) + (WINDOW_WIDTH / 2) + 51), PixelToScreenCoord(WINDOW_HEIGHT - 86), &rect_cur, SURFACE_ID_TEXT_BOX);
+			PutBitmap3(&grcFull, PixelToScreenCoord((gTS.select * 41) + (WINDOW_WIDTH / 2) + 25), PixelToScreenCoord(WINDOW_HEIGHT - 94), &rect_cur, SURFACE_ID_TEXT_BOX);
 	}
 }
 

@@ -19,6 +19,7 @@ equivalents.
 
 #include "WindowsWrapper.h"
 
+
 #include "Backends/Audio.h"
 #ifdef EXTRA_SOUND_FORMATS
 #include "ExtraSoundFormats.h"

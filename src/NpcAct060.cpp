@@ -1270,9 +1270,9 @@ void ActNpc068(NPCHAR *npc)
 
 	RECT rect_left[9] = {
 		{0, 0, 40, 24},
-		{0, 48, 40, 72},
+		{0, 48, 40, 72}, // Walking 1
 		{0, 0, 40, 24},
-		{40, 48, 80, 72},
+		{40, 48, 80, 72}, // Walking 2
 		{0, 0, 40, 24},
 		{80, 48, 120, 72},
 		{120, 48, 160, 72},
@@ -1282,9 +1282,9 @@ void ActNpc068(NPCHAR *npc)
 
 	RECT rect_right[9] = {
 		{0, 24, 40, 48},
-		{0, 72, 40, 96},
+		{0, 72, 40, 96}, // Walking 1
 		{0, 24, 40, 48},
-		{40, 72, 80, 96},
+		{40, 72, 80, 96}, // Walking 2
 		{0, 24, 40, 48},
 		{80, 72, 120, 96},
 		{120, 72, 160, 96},
@@ -1329,7 +1329,7 @@ void ActNpc069(NPCHAR *npc)
 			{
 				npc->direct = 0;
 			}
-			if(npc->flag & 1) // Touching a left wall
+			if (npc->flag & 1) // Touching a left wall
 			{
 				npc->direct = 2;
 			}

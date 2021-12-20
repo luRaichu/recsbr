@@ -1643,12 +1643,12 @@ void ActNpc057(NPCHAR *npc)
 	switch (npc->act_no)
 	{
 		case 0:
-			deg = Random(0, 0xFF);
+			deg = -50;
 			npc->xm = GetCos(deg);
 			deg += 0x40;
 			npc->tgt_x = npc->x + (GetCos(deg) * 8);
 
-			deg = Random(0, 0xFF);
+			deg = 30;
 			npc->ym = GetSin(deg);
 			deg += 0x40;
 			npc->tgt_y = npc->y + (GetSin(deg) * 8);
@@ -1683,116 +1683,27 @@ void ActNpc057(NPCHAR *npc)
 				npc->ym = 0x200;
 			if (npc->ym < -0x200)
 				npc->ym = -0x200;
-
-			if (npc->shock)
-			{
-				npc->act_no = 2;
-				npc->act_wait = 0;
-
-				if (npc->direct == 2)
-					npc->xm = -0x200;
-				else
-					npc->xm = 0x200;
-
-				npc->ym = 0;
-			}
-
-			break;
-
-		case 2:
-			if (gMC.x < npc->x)
-				npc->direct = 0;
-			else
-				npc->direct = 2;
-
-			if (npc->y > gMC.y + (48 * 0x200))
-			{
-				if (gMC.x < npc->x)
-					npc->xm += 0x10;
-				if (gMC.x > npc->x)
-					npc->xm -= 0x10;
-			}
-			else
-			{
-				if (gMC.x < npc->x)
-					npc->xm -= 0x10;
-				if (gMC.x > npc->x)
-					npc->xm += 0x10;
-			}
-
-			if (gMC.y < npc->y)
-				npc->ym -= 0x10;
-			if (gMC.y > npc->y)
-				npc->ym += 0x10;
-
-			if (npc->shock)
-			{
-				npc->ym += 0x20;
-				npc->xm = 0;
-			}
-
-			if (npc->xm < 0 && npc->flag & 1)
-				npc->xm = 0x200;
-			if (npc->xm > 0 && npc->flag & 4)
-				npc->xm = -0x200;
-
-			if (npc->ym < 0 && npc->flag & 2)
-				npc->ym = 0x200;
-			if (npc->ym > 0 && npc->flag & 8)
-				npc->ym = -0x200;
-
-			if (npc->xm > 0x5FF)
-				npc->xm = 0x5FF;
-			if (npc->xm < -0x5FF)
-				npc->xm = -0x5FF;
-
-			if (npc->ym > 0x5FF)
-				npc->ym = 0x5FF;
-			if (npc->ym < -0x5FF)
-				npc->ym = -0x5FF;
-
-			break;
 	}
 
 	npc->x += npc->xm;
 	npc->y += npc->ym;
 
-	RECT rect_left[5] = {
-		{96, 80, 128, 112},
-		{128, 80, 160, 112},
-		{160, 80, 192, 112},
-		{192, 80, 224, 112},
-		{224, 80, 256, 112},
+	RECT rect[3] = {
+		{192, 16, 200, 24},
+		{200, 16, 208, 24},
+		{208, 16, 216, 24}
 	};
 
-	RECT rect_right[5] = {
-		{96, 112, 128, 144},
-		{128, 112, 160, 144},
-		{160, 112, 192, 144},
-		{192, 112, 224, 144},
-		{224, 112, 256, 144},
-	};
-
-	if (npc->shock)
+	if (++npc->ani_wait > 2)
 	{
-		npc->ani_no = 4;
-	}
-	else
-	{
-		if (++npc->ani_wait > 1)
-		{
-			npc->ani_wait = 0;
-			++npc->ani_no;
-		}
-
-		if (npc->ani_no > 1)
-			npc->ani_no = 0;
+		npc->ani_wait = 0;
+		++npc->ani_no;
 	}
 
-	if (npc->direct == 0)
-		npc->rect = rect_left[npc->ani_no];
-	else
-		npc->rect = rect_right[npc->ani_no];
+	if (npc->ani_no > 2)
+		npc->ani_no = 0;
+
+	npc->rect = rect[npc->ani_no];
 }
 
 // Basu (Egg Corridor)
