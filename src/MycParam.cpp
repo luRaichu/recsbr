@@ -105,6 +105,15 @@ void AddExpMyChar(int x)
 		}
 	}*/
 	cion += x;
+	if (x == 1) {
+		SetCaret(gMC.x, gMC.y, 21, 0);
+	}
+	else if (x == 3) {
+		SetCaret(gMC.x, gMC.y, 22, 0);
+	}
+	else if (x == 8) {
+		SetCaret(gMC.x, gMC.y, 23, 0);
+	}
 }
 
 void ZeroExpMyChar(void)

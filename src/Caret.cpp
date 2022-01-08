@@ -708,13 +708,40 @@ void ActCaret21(CARET* crt)
 	crt->y += crt->ym;
 	crt->rect = rect[crt->ani_no];
 }
+// I FUCKING HATE THIS
 void ActCaret22(CARET* crt)
 {
+	RECT rect[1] = {
+		{136, 120, 144, 128},
+	};
 
+	if (++crt->count1 > 30)
+		crt->cond = 0;
+
+	if (crt->count1 < 3)
+		crt->ym = -8 * 0x200;
+	else
+		crt->ym = 0;
+
+	crt->y += crt->ym;
+	crt->rect = rect[crt->ani_no];
 }
 void ActCaret23(CARET* crt)
 {
+	RECT rect[1] = {
+		{144, 120, 152, 128},
+	};
 
+	if (++crt->count1 > 30)
+		crt->cond = 0;
+
+	if (crt->count1 < 3)
+		crt->ym = -8 * 0x200;
+	else
+		crt->ym = 0;
+
+	crt->y += crt->ym;
+	crt->rect = rect[crt->ani_no];
 }
 typedef void (*CARETFUNCTION)(CARET*);
 CARETFUNCTION gpCaretFuncTbl[24] =
