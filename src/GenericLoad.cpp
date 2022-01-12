@@ -31,17 +31,17 @@ static const struct
 } ptp_table[] = {
 	// TODO - Remove names
 	{1, "PixTone/007.pxt", SOUND_TYPE_PIXTONE}, //menu move blip
-	{2, "Wav/MESSAGE.ogg", SOUND_TYPE_OTHER}, //msg blip
+	{2, "Wav/Message.wav", SOUND_TYPE_OTHER}, //msg blip
 	{3, "PixTone/003.pxt", SOUND_TYPE_PIXTONE}, //bonkhead
 	{4, "PixTone/004.pxt", SOUND_TYPE_PIXTONE}, //switch weapon
-	{5, "Wav/YESNO.ogg", SOUND_TYPE_OTHER}, //menu prompt
+	{5, "Wav/YesNo.wav", SOUND_TYPE_OTHER}, //menu prompt
 	{6, "PixTone/006.pxt", SOUND_TYPE_PIXTONE}, //critter hop(?)
 	{7, "PixTone/007.pxt", SOUND_TYPE_PIXTONE}, //nothing, DO NOT EDIT OR I'LL KILL YOU
 	{11, "PixTone/011.pxt", SOUND_TYPE_PIXTONE},//swell sound, used in ballos fight
 	{12, "PixTone/012.pxt", SOUND_TYPE_PIXTONE},//door
 	{14, "PixTone/045.pxt", SOUND_TYPE_PIXTONE},//destroy snack block
 	{15, "PixTone/015.pxt", SOUND_TYPE_PIXTONE},//touch exp dorito
-	{16, "Wav/pchurt.ogg", SOUND_TYPE_OTHER},//jump
+	{16, "Wav/Hurt.wav", SOUND_TYPE_OTHER},//jump
 	{17, "PixTone/007.pxt", SOUND_TYPE_PIXTONE},//hurt
 	{18, "Wav/Select.wav", SOUND_TYPE_OTHER},//RIP
 	{20, "PixTone/020.pxt", SOUND_TYPE_PIXTONE},//menu select
@@ -62,7 +62,7 @@ static const struct
 	{35, "PixTone/035.pxt", SOUND_TYPE_PIXTONE},//fireball shot
 	{37, "PixTone/037.pxt", SOUND_TYPE_PIXTONE},//fat ass explosion
 	{38, "PixTone/038.pxt", SOUND_TYPE_PIXTONE},//no ammo
-	{39, "Wav/fatgamer.ogg", SOUND_TYPE_OTHER},//get item
+	{39, "Wav/Shoot.wav", SOUND_TYPE_OTHER},//get item
 	{40, "PixTone/040.pxt", SOUND_TYPE_PIXTONE},//labyrinth critter fire bubble (I think)
 	{41, "PixTone/041.pxt", SOUND_TYPE_PIXTONE},//Waterway stream
 	{42, "PixTone/042.pxt", SOUND_TYPE_PIXTONE},//get missle
@@ -74,10 +74,10 @@ static const struct
 	{48, "PixTone/048.pxt", SOUND_TYPE_PIXTONE},//bubbler lv. 1 shot
 	{49, "PixTone/049.pxt", SOUND_TYPE_PIXTONE},//lv. 3 polar star shot
 	{50, "PixTone/050.pxt", SOUND_TYPE_PIXTONE},//mimiga death squeak
-	{51, "Wav/enemy.ogg", SOUND_TYPE_OTHER},//enemy hurt
-	{52, "Wav/enemy.ogg", SOUND_TYPE_OTHER},//big enemy hurt
-	{53, "Wav/enemy.ogg", SOUND_TYPE_OTHER},//small enemy hurt
-	{54, "Wav/enemy.ogg", SOUND_TYPE_OTHER},//"cool" enemy hurt
+	{51, "Wav/EnemyHurt.wav", SOUND_TYPE_OTHER},//enemy hurt
+	{52, "Wav/EnemyHurt.wav", SOUND_TYPE_OTHER},//big enemy hurt
+	{53, "Wav/EnemyHurt.wav", SOUND_TYPE_OTHER},//small enemy hurt
+	{54, "Wav/EnemyHurt.wav", SOUND_TYPE_OTHER},//"cool" enemy hurt
 	{55, "PixTone/055.pxt", SOUND_TYPE_PIXTONE},//another enemy squeak
 	//{56, "PixTone/056.pxt", SOUND_TYPE_PIXTONE},//watersplash
 	{57, "PixTone/057.pxt", SOUND_TYPE_PIXTONE},//weird and fast enemy hurt sfct
@@ -89,7 +89,7 @@ static const struct
 	{63, "PixTone/063.pxt", SOUND_TYPE_PIXTONE},//spur fire lv. 3
 	{64, "PixTone/064.pxt", SOUND_TYPE_PIXTONE},//spur fire MAX
 	{65, "PixTone/065.pxt", SOUND_TYPE_PIXTONE},//Honey, your spur is fully charged
-	{70, "Wav/shatterr3.ogg", SOUND_TYPE_OTHER},//small explosion
+	{70, "Wav/Shatter.wav", SOUND_TYPE_OTHER},//small explosion
 	{71, "PixTone/071.pxt", SOUND_TYPE_PIXTONE},//lil crash
 	{72, "PixTone/072.pxt", SOUND_TYPE_PIXTONE},//fat ass crash
 	{100, "PixTone/100.pxt", SOUND_TYPE_PIXTONE},//I have no idea, sounds like a click
