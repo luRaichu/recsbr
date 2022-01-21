@@ -630,7 +630,7 @@ void ActCaret19(CARET* crt)
 void ActCaret20(CARET* crt) // Splash caret
 {
 	RECT rect[4] = {
-		{0, 65, 8,72},
+		{0, 65, 8, 72},
 		{8, 65, 16, 72},
 		{16, 65, 24, 72},
 		{24, 65, 32, 72},
