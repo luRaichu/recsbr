@@ -109,4 +109,4 @@ elf2rpl game_english/CSE2 game_english/CSE2.rpx
 
 ## Licensing
 
-Being a decompilation, the majority of the code in this project belongs to Daisuke "Pixel" Amaya - not us. We've yet to agree on a licence for our own code.
+Being a decompilation, the majority of the code in this project belongs to Daisuke "Pixel" Amaya - not us. This repository is licensed under The GNU General Public License v3.0. I haven't read all of it, so hopefully I'm not doing something ridiculous by licensing code I don't own. 
